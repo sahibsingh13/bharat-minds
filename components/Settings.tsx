@@ -13,6 +13,11 @@ export default function Settings() {
     const next = { gemini: gemini.trim() || undefined, openrouter: openrouter.trim() || undefined };
     setKeys(next);
     setOpen(false);
+    if (typeof window !== 'undefined') {
+      window.setTimeout(() => {
+        window.location.reload();
+      }, 150);
+    }
   };
 
   // Allow programmatic open from anywhere (e.g., rate-limit CTA)

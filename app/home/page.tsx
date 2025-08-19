@@ -1,6 +1,6 @@
 "use client";
 import { useMemo, useState } from "react";
-import { Sparkles, Plus, Trash2 } from "lucide-react";
+import { Sparkles, Plus, Trash2, Cog } from "lucide-react";
 import { useLocalStorage } from "@/lib/useLocalStorage";
 import { MODEL_CATALOG } from "@/lib/models";
 import { AiModel, ApiKeys, ChatMessage, ChatThread } from "@/lib/types";
@@ -19,6 +19,12 @@ export default function HomeChat() {
   ]);
   const [loadingIds, setLoadingIds] = useState<string[]>([]);
   const [rightOpen, setRightOpen] = useState<boolean>(false);
+  const [welcomeShown, setWelcomeShown] = useLocalStorage<boolean>("bharat-minds:welcome-shown", false);
+  const [userName, setUserName] = useState<string>("");
+  // auto-scroll helper on new content
+  function scrollToBottom() {
+    try { document.getElementById('messages-bottom')?.scrollIntoView({ behavior: 'smooth', block: 'end' }); } catch {}
+  }
 
   const activeThread = useMemo(() => threads.find(t => t.id === activeId) || null, [threads, activeId]);
   const messages = useMemo(() => activeThread?.messages ?? [], [activeThread]);
@@ -77,6 +83,7 @@ export default function HomeChat() {
         setLoadingIds(prev => prev.filter(x => x !== m.id));
       }
     }));
+    scrollToBottom();
   }
 
   // Group into turns, then render each answer stacked (ChatGPT-like)
@@ -91,6 +98,24 @@ export default function HomeChat() {
   }, [messages]);
 
   const anyLoading = loadingIds.length > 0;
+
+  // Load stored user name
+  if (typeof window !== 'undefined' && !userName) {
+    try { const n = localStorage.getItem('bharat-minds:user-name'); if (n) setUserName(n); } catch {}
+  }
+
+  // Welcome message on revisit
+  if (typeof window !== 'undefined' && !welcomeShown) {
+    try {
+      const first = localStorage.getItem('bharat-minds:user-name');
+      if (first) {
+        setWelcomeShown(true);
+        const t = ensureThread();
+        const msg: ChatMessage = { role: 'assistant', content: `Welcome back, ${first}! Ask me anything.`, ts: Date.now(), modelId: 'system' };
+        setThreads(prev => prev.map(x => x.id === t.id ? { ...x, messages: [...(x.messages||[]), msg] } : x));
+      }
+    } catch {}
+  }
 
   return (
     <div className="min-h-screen w-full bg-black text-white flex">
@@ -156,19 +181,26 @@ export default function HomeChat() {
                 <Plus size={14} /> New Chat
               </button>
             </div>
-            <div className="flex items-center gap-2">
-              <button onClick={() => setRightOpen(v => !v)} className="text-xs px-3 py-2 rounded-lg border border-white/15 bg-white/5 hover:bg-white/10 cursor-pointer">
-                Models & Settings
+            <div className="flex items-center gap-3">
+              {/* Selected models chips */}
+              <div className="hidden md:flex items-center gap-1">
+                {selectedModels.map(m => (
+                  <span key={m.id} className="text-[11px] px-2 py-0.5 rounded-full bg-white/10 border border-white/15">{m.label}</span>
+                ))}
+              </div>
+              <button onClick={() => setRightOpen(v => !v)} className="h-8 w-8 rounded-full border border-white/15 bg-white/5 hover:bg-white/10 cursor-pointer inline-flex items-center justify-center" title="Settings">
+                <Cog size={14} />
               </button>
             </div>
           </div>
         </div>
 
         {/* Message list */}
-        <div className="flex-1 overflow-y-auto px-4 py-4">
+        <div className="flex-1 overflow-y-auto px-4 py-4" id="messages-container">
           {turns.length === 0 && (
             <div className="max-w-2xl mx-auto text-center text-zinc-400 mt-10">
-              Start a conversation. Select models in the panel, ask a question, and compare answers.
+              <div className="mx-auto w-20 h-20 rounded-full bg-blue-500/20 border border-blue-400/30 animate-pulse" />
+              <div className="mt-3">Start a conversation. Select models in the panel, ask a question, and compare answers.</div>
             </div>
           )}
           <div className="max-w-3xl mx-auto space-y-6">
@@ -177,8 +209,42 @@ export default function HomeChat() {
                 <div className="rounded-lg bg-white/5 border border-white/10 p-4">
                   <div className="text-sm text-zinc-300"><span className="opacity-60">You:</span> {row.user.content}</div>
                 </div>
+                {/* Answers inline tabs when 2+ models selected */}
                 {row.answers.length === 0 ? (
-                  <div className="rounded-lg border border-white/10 p-4 text-sm text-zinc-400">Waiting for responses…</div>
+                  <div className="rounded-lg border border-white/10 p-4 text-sm">
+                    <div className="flex items-center gap-2">
+                      <span className="relative inline-flex h-3 w-3">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
+                        <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-500" />
+                      </span>
+                      <span className="text-zinc-300">Waiting for responses…</span>
+                    </div>
+                  </div>
+                ) : selectedModels.length > 1 ? (
+                  <div>
+                    <div className="flex gap-2 mb-2">
+                      {selectedModels.map((m, i) => (
+                        <a key={m.id} href={`#turn-${idx}-${m.id}`} className="text-[11px] px-2 py-1 rounded bg-white/10 border border-white/15 hover:bg-white/15">
+                          {m.label}
+                        </a>
+                      ))}
+                    </div>
+                    <div className="space-y-3">
+                      {selectedModels.map((m) => {
+                        const ans = row.answers.find(a => a.modelId === m.id);
+                        return (
+                          <div id={`turn-${idx}-${m.id}`} key={m.id} className="rounded-lg p-4 ring-1 bg-white/5 ring-white/10">
+                            <div className="mb-2 text-xs inline-flex items-center gap-2">
+                              <span className="px-2 py-0.5 rounded-full border border-white/20 text-zinc-200">{m.label}</span>
+                            </div>
+                            <div className="prose prose-invert max-w-none text-sm">
+                              <MarkdownLite text={ans?.content || '…'} />
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
                 ) : (
                   row.answers.map((ans) => {
                     const m = MODEL_CATALOG.find(x => x.id === ans.modelId);
@@ -198,6 +264,7 @@ export default function HomeChat() {
                 )}
               </div>
             ))}
+            <div id="messages-bottom" />
           </div>
         </div>
 
@@ -210,7 +277,16 @@ export default function HomeChat() {
       </div>
 
       {/* Right panel */}
-      <RightPanel open={rightOpen} onClose={() => setRightOpen(false)} selectedIds={selectedIds} onToggle={toggleModel} />
+      <RightPanel
+        open={rightOpen}
+        onClose={() => setRightOpen(false)}
+        selectedIds={selectedIds}
+        onToggle={toggleModel}
+        threads={threads}
+        activeId={activeId}
+        setActiveId={setActiveId}
+        setThreads={setThreads}
+      />
     </div>
   );
 }
