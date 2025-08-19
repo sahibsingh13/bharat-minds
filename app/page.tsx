@@ -162,7 +162,7 @@ export default function Home() {
 
             <div className={`flex items-center justify-between mb-2 ${sidebarOpen ? '' : 'opacity-0 pointer-events-none'}`}>
               <div className="flex items-center gap-3">
-                <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-blue-400 to-purple-500" />
+                <div className="w-2.5 h-2.5 rounded-full bg-blue-500" />
                 <h2 className="text-sm font-semibold">Bharat Minds</h2>
               </div>
 
@@ -214,7 +214,7 @@ export default function Home() {
                     setThreads(prev => [t, ...prev]);
                     setActiveId(t.id);
                   }}
-                  className="mb-3 text-sm px-3 py-2 rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border border-blue-400/20 transition-all duration-200"
+                  className="mb-3 text-sm px-3 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white border border-blue-500/20 transition-colors"
                 >
                   + New Chat
                 </button>
@@ -238,7 +238,7 @@ export default function Home() {
                     setThreads(prev => [t, ...prev]);
                     setActiveId(t.id);
                   }}
-                  className="h-8 w-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 flex items-center justify-center mb-4 mx-auto shrink-0 transition-all duration-200"
+                  className="h-8 w-8 rounded-full bg-blue-500 hover:bg-blue-600 flex items-center justify-center mb-4 mx-auto shrink-0 transition-colors"
                 >
                   <Plus size={14} />
                 </button>
@@ -274,7 +274,7 @@ export default function Home() {
               <div className="absolute left-0 top-0 h-full w-72 bg-zinc-900/90 border-r border-white/10 p-3">
                 <div className="flex items-center justify-between mb-2">
                                   <div className="flex items-center gap-2">
-                  <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-blue-400 to-purple-500" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-blue-500" />
                   <h2 className="text-sm font-semibold">Bharat Minds</h2>
                 </div>
                   <button onClick={() => setMobileSidebarOpen(false)} className="text-xs px-2 py-1 rounded bg-white/10">Close</button>
@@ -286,7 +286,7 @@ export default function Home() {
                     setActiveId(t.id);
                     setMobileSidebarOpen(false);
                   }}
-                  className="mb-3 text-sm px-3 py-2 w-full rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border border-blue-400/20 transition-all duration-200"
+                  className="mb-3 text-sm px-3 py-2 w-full rounded-lg bg-blue-500 hover:bg-blue-600 text-white border border-blue-500/20 transition-colors"
                 >
                   + New Chat
                 </button>
@@ -309,14 +309,14 @@ export default function Home() {
               <div className="flex items-center gap-3">
                 <button onClick={() => setMobileSidebarOpen(true)} className="lg:hidden text-xs px-3 py-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">Menu</button>
                 <div className="flex items-center gap-2">
-                  <Sparkles className="h-5 w-5 text-blue-400" />
-                  <h1 className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Bharat Minds</h1>
+                  <Sparkles className="h-5 w-5 text-blue-500" />
+                  <h1 className="text-xl font-bold text-white">Bharat Minds</h1>
                 </div>
               </div>
               <div className="flex items-center gap-2">
                 <button
                   onClick={handleRefresh}
-                  className="inline-flex items-center gap-2 text-xs px-3 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 text-white border border-blue-400/20 hover:from-blue-600 hover:to-purple-700 transition-all duration-200 shadow-lg"
+                  className="inline-flex items-center gap-2 text-xs px-3 py-2 rounded-lg bg-blue-500 text-white border border-blue-500/20 hover:bg-blue-600 transition-colors"
                   title="Start new chat"
                 >
                   <RefreshCw size={14} />
@@ -335,31 +335,31 @@ export default function Home() {
                 <button
                   key={m.id}
                   onClick={() => toggle(m.id)}
-                  className={`h-10 px-4 text-sm rounded-xl text-white border-2 flex items-center gap-2 bg-gradient-to-r from-blue-500/10 to-purple-500/10 hover:from-blue-500/20 hover:to-purple-500/20 transition-all duration-200 ${
-                    m.good ? 'border-blue-400/50 shadow-lg shadow-blue-500/20' : isFree ? 'border-green-400/50 shadow-lg shadow-green-500/20' : 'border-white/20 hover:border-white/30'
+                  className={`h-10 px-4 text-sm rounded-lg text-white border flex items-center gap-2 bg-white/5 hover:bg-white/10 transition-colors ${
+                    m.good ? 'border-blue-400/50' : isFree ? 'border-green-400/50' : 'border-white/20 hover:border-white/30'
                   }`}
                   title="Click to toggle"
                 >
                   {m.good && (
-                    <span className="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-blue-500/20 text-blue-300 ring-1 ring-blue-400/30">
+                    <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-blue-500/10 text-blue-300">
                       <Sparkles size={12} className="shrink-0" />
                       <span className="hidden sm:inline">Pro</span>
                     </span>
                   )}
                   {isFree && (
-                    <span className="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-green-500/20 text-green-300 ring-1 ring-green-400/30">
+                    <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-green-500/10 text-green-300">
                       <span className="h-2 w-2 rounded-full bg-green-300" />
                       <span className="hidden sm:inline">Free</span>
                     </span>
                   )}
                   {isUncensored && (
-                    <span className="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-red-500/20 text-red-300 ring-1 ring-red-400/30">
+                    <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-red-500/10 text-red-300">
                       <span className="h-2 w-2 rounded-full bg-red-300" />
                       <span className="hidden sm:inline">Uncensored</span>
                     </span>
                   )}
                   <span className="truncate max-w-[180px] font-medium">{m.label}</span>
-                  <div className="w-2 h-2 rounded-full bg-gradient-to-r from-blue-400 to-purple-500 animate-pulse"></div>
+                  <div className="w-2 h-2 rounded-full bg-blue-500"></div>
                 </button>
               );})}
               {selectedModels.length === 0 && (
@@ -368,7 +368,7 @@ export default function Home() {
               <div className="ml-auto flex items-center gap-3">
                 <button
                   onClick={() => setModelsModalOpen(true)}
-                  className="text-sm px-4 py-2 rounded-xl border-2 border-white/20 bg-gradient-to-r from-blue-500/10 to-purple-500/10 hover:from-blue-500/20 hover:to-purple-500/20 hover:border-white/30 transition-all duration-200"
+                  className="text-sm px-4 py-2 rounded-lg border border-white/20 bg-white/5 hover:bg-white/10 hover:border-white/30 transition-colors"
                 >
                   Change Models
                 </button>
@@ -600,7 +600,7 @@ export default function Home() {
                                         <div className="mt-2">
                                           <button
                                             onClick={() => window.dispatchEvent(new Event('open-settings'))}
-                                            className="text-xs px-2.5 py-1 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 text-white border border-blue-400/20 hover:from-blue-600 hover:to-purple-700 transition-all duration-200"
+                                            className="text-xs px-2.5 py-1 rounded-md bg-blue-500 text-white border border-blue-500/20 hover:bg-blue-600 transition-colors"
                                           >
                                             Add keys
                                           </button>
