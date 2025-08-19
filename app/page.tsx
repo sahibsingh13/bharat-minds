@@ -1,7 +1,6 @@
 "use client";
 import { useMemo, useState } from "react";
-import Image from "next/image";
-import { ChevronLeft, ChevronRight, Plus, RefreshCw, Check, Sparkles } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus, RefreshCw, Check, Sparkles, Star } from "lucide-react";
 import Settings from "@/components/Settings";
 import { useLocalStorage } from "@/lib/useLocalStorage";
 import { MODEL_CATALOG } from "@/lib/models";
