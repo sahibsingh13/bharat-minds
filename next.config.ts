@@ -1,9 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  experimental: {
-    appDir: true
-  }
+  // App Router is now stable in Next.js 15, no experimental config needed
 };
 
 export default nextConfig;
