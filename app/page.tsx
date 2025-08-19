@@ -139,18 +139,13 @@ export default function Home() {
     <div className="min-h-screen w-full bg-black relative text-white">
       <div
         className="absolute inset-0 z-0"
-        style={{ background: "linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #0a0a0a 100%)" }}
-      />
-      <div
-        className="absolute inset-0 z-0 pointer-events-none"
-        style={{ backgroundImage: "radial-gradient(circle at 50% 50%, rgba(99,102,241,0.1) 0%, rgba(0,0,0,0) 70%)", opacity: 0.8 }}
+        style={{ background: "#0a0a0a" }}
       />
 
-      <div className="relative z-10 px-3 lg:px-4 py-4 lg:py-6">
-        <div className="flex gap-3 lg:gap-4">
+              <div className="relative z-10 flex h-screen">
           {/* Sidebar */}
           {/* Desktop sidebar */}
-          <aside className={`relative hidden lg:flex shrink-0 h-[calc(100vh-2rem)] lg:h-[calc(100vh-3rem)] rounded-lg border border-white/10 bg-white/5 p-3 flex-col transition-[width] duration-300 ${sidebarOpen ? 'w-64' : 'w-14'}`}>
+          <aside className={`relative hidden lg:flex shrink-0 h-full rounded-lg border border-white/10 bg-white/5 p-3 flex-col transition-[width] duration-300 ${sidebarOpen ? 'w-64' : 'w-14'}`}>
             {/* Collapse/Expand toggle */}
             <button
               aria-label={sidebarOpen ? 'Collapse sidebar' : 'Expand sidebar'}
@@ -271,7 +266,7 @@ export default function Home() {
           {mobileSidebarOpen && (
             <div className="lg:hidden fixed inset-0 z-40">
               <div className="absolute inset-0 bg-black/60" onClick={() => setMobileSidebarOpen(false)} />
-              <div className="absolute left-0 top-0 h-full w-72 bg-zinc-900/90 border-r border-white/10 p-3">
+              <div className="absolute left-0 top-0 h-full w-72 bg-black/90 border-r border-white/10 p-3">
                 <div className="flex items-center justify-between mb-2">
                                   <div className="flex items-center gap-2">
                   <div className="w-2.5 h-2.5 rounded-full bg-blue-500" />
@@ -302,29 +297,31 @@ export default function Home() {
               </div>
             </div>
           )}
-          {/* Main content */}
-          <div className="flex-1 min-w-0 flex flex-col h-[calc(100vh-2rem)] lg:h-[calc(100vh-3rem)] overflow-hidden">
-            {/* Top bar */}
-          <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <button onClick={() => setMobileSidebarOpen(true)} className="lg:hidden text-xs px-3 py-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">Menu</button>
-                <div className="flex items-center gap-2">
-                  <Sparkles className="h-5 w-5 text-blue-500" />
-                  <h1 className="text-xl font-bold text-white">Bharat Minds</h1>
+                      {/* Main content */}
+            <div className="flex-1 min-w-0 flex flex-col h-full overflow-hidden">
+              {/* Sticky Top bar */}
+              <div className="sticky top-0 z-20 bg-black/80 backdrop-blur-sm border-b border-white/10 px-4 py-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <button onClick={() => setMobileSidebarOpen(true)} className="lg:hidden text-xs px-3 py-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">Menu</button>
+                    <div className="flex items-center gap-2">
+                      <Sparkles className="h-5 w-5 text-blue-500" />
+                      <h1 className="text-xl font-bold text-white">Bharat Minds</h1>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={handleRefresh}
+                      className="inline-flex items-center gap-2 text-xs px-3 py-2 rounded-lg bg-blue-500 text-white border border-blue-500/20 hover:bg-blue-600 transition-colors"
+                      title="Start new chat"
+                    >
+                      <RefreshCw size={14} />
+                      <span className="hidden sm:inline">New Chat</span>
+                      <span className="sm:hidden">New</span>
+                    </button>
+                  </div>
                 </div>
               </div>
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={handleRefresh}
-                  className="inline-flex items-center gap-2 text-xs px-3 py-2 rounded-lg bg-blue-500 text-white border border-blue-500/20 hover:bg-blue-600 transition-colors"
-                  title="Start new chat"
-                >
-                  <RefreshCw size={14} />
-                  <span className="hidden sm:inline">New Chat</span>
-                  <span className="sm:hidden">New</span>
-                </button>
-              </div>
-            </div>
 
             {/* Selected models row + Change button */}
             <div className="mb-4 flex flex-wrap items-center gap-3">
@@ -480,8 +477,10 @@ export default function Home() {
               </div>
             )}
 
-            {/* Messages area */}
-            <div className="rounded-lg border border-white/10 bg-white/5 px-2 pt-5 overflow-x-auto flex-1 overflow-y-auto pb-28">
+            {/* Chat area */}
+            <div className="flex-1 overflow-hidden flex flex-col">
+              {/* Messages area */}
+              <div className="flex-1 overflow-y-auto overflow-x-auto px-4 py-4">
               {selectedModels.length === 0 ? (
                 <div className="p-4 text-zinc-400">Select up to 5 models to compare.</div>
               ) : (
@@ -629,10 +628,11 @@ export default function Home() {
               )}
             </div>
 
-            {/* Fixed bottom input line */}
-            <div className="fixed bottom-0 left-0 right-0 z-20 pt-2 pb-[env(safe-area-inset-bottom)] bg-gradient-to-t from-black/70 to-transparent">
-              <div className="max-w-3xl mx-auto px-3">
-                <AiInput onSubmit={(text, imageDataUrl) => { send(text, imageDataUrl); }} loading={anyLoading} />
+              {/* Sticky Input area */}
+              <div className="sticky bottom-0 bg-black/80 backdrop-blur-sm border-t border-white/10 p-4">
+                <div className="max-w-3xl mx-auto">
+                  <AiInput onSubmit={(text, imageDataUrl) => { send(text, imageDataUrl); }} loading={anyLoading} />
+                </div>
               </div>
             </div>
           </div>
