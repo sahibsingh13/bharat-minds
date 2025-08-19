@@ -218,7 +218,7 @@ export function AiInput({ onSubmit, loading = false }: { onSubmit: (text: string
                   className="hidden"
                 />
                 <Paperclip
-                  className={cn("w-4 h-4 transition-colors", imagePreview ? "text-[#FF9933]" : "text-white/60 hover:text-white")}
+                  className={cn("w-4 h-4 transition-colors", imagePreview ? "text-blue-400" : "text-white/60 hover:text-white")}
                 />
               </label>
               <button
@@ -229,7 +229,7 @@ export function AiInput({ onSubmit, loading = false }: { onSubmit: (text: string
                 className={cn(
                   "rounded-full transition-all flex items-center gap-2 px-1.5 py-1 border h-8",
                   showSearch
-                    ? "bg-[#FF9933]/15 border-[#FF9933] text-[#FF9933]"
+                    ? "bg-blue-500/15 border-blue-400 text-blue-400"
                     : "bg-black/5 dark:bg-white/5 border-transparent text-white/60 hover:text-white"
                 )}
               >
@@ -257,7 +257,7 @@ export function AiInput({ onSubmit, loading = false }: { onSubmit: (text: string
                     <Globe
                       className={cn(
                         "w-4 h-4",
-                        showSearch ? "text-[#FF9933]" : "text-inherit"
+                        showSearch ? "text-blue-400" : "text-inherit"
                       )}
                     />
                   </motion.div>
@@ -272,7 +272,7 @@ export function AiInput({ onSubmit, loading = false }: { onSubmit: (text: string
                       }}
                       exit={{ width: 0, opacity: 0 }}
                       transition={{ duration: 0.2 }}
-                      className="text-sm overflow-hidden whitespace-nowrap text-[#FF9933] flex-shrink-0"
+                      className="text-sm overflow-hidden whitespace-nowrap text-blue-400 flex-shrink-0"
                     >
                       Search
                     </motion.span>
@@ -287,9 +287,9 @@ export function AiInput({ onSubmit, loading = false }: { onSubmit: (text: string
                 className={cn(
                   "rounded-full p-2 transition-colors",
                   loading
-                    ? "bg-[#FF9933]/20 text-[#FF9933] cursor-not-allowed"
+                    ? "bg-blue-500/20 text-blue-400 cursor-not-allowed"
                   : value
-                    ? "bg-[#FF9933]/15 text-[#FF9933]"
+                    ? "bg-blue-500/15 text-blue-400"
                     : "bg-black/5 dark:bg-white/5 text-white/80 hover:text-white"
                 )}
                 disabled={loading}

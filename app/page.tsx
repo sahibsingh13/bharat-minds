@@ -1,7 +1,7 @@
 "use client";
 import { useMemo, useState } from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight, Plus, Github, Star, Check } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus, RefreshCw, Check, Sparkles } from "lucide-react";
 import Settings from "@/components/Settings";
 import { useLocalStorage } from "@/lib/useLocalStorage";
 import { MODEL_CATALOG } from "@/lib/models";
@@ -12,19 +12,16 @@ import MarkdownLite from "@/components/MarkdownLite";
 
 export default function Home() {
   const [selectedIds, setSelectedIds] = useLocalStorage<string[]>(
-    "ai-fiesta:selected-models",
+    "bharat-minds:selected-models",
     [
       "gemini-2.5-flash",
       "llama-3.3-70b-instruct",
-      "qwen-2.5-72b-instruct",
-      "openai-gpt-oss-20b-free",
-      "glm-4.5-air",
     ]
   );
-  const [keys] = useLocalStorage<ApiKeys>("ai-fiesta:keys", {});
-  const [threads, setThreads] = useLocalStorage<ChatThread[]>("ai-fiesta:threads", []);
-  const [activeId, setActiveId] = useLocalStorage<string | null>("ai-fiesta:active-thread", null);
-  const [sidebarOpen, setSidebarOpen] = useLocalStorage<boolean>("ai-fiesta:sidebar-open", true);
+  const [keys] = useLocalStorage<ApiKeys>("bharat-minds:keys", {});
+  const [threads, setThreads] = useLocalStorage<ChatThread[]>("bharat-minds:threads", []);
+  const [activeId, setActiveId] = useLocalStorage<string | null>("bharat-minds:active-thread", null);
+  const [sidebarOpen, setSidebarOpen] = useLocalStorage<boolean>("bharat-minds:sidebar-open", true);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [modelsModalOpen, setModelsModalOpen] = useState(false);
   const activeThread = useMemo(() => threads.find(t => t.id === activeId) || null, [threads, activeId]);
@@ -34,7 +31,7 @@ export default function Home() {
   const anyLoading = loadingIds.length > 0;
   const [copiedAllIdx, setCopiedAllIdx] = useState<number | null>(null);
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
-  const [firstNoteDismissed, setFirstNoteDismissed] = useLocalStorage<boolean>('ai-fiesta:first-visit-note-dismissed', false);
+  const [firstNoteDismissed, setFirstNoteDismissed] = useLocalStorage<boolean>('bharat-minds:first-visit-note-dismissed', false);
   const showFirstVisitNote = !firstNoteDismissed && (!keys?.openrouter || !keys?.gemini);
 
   // Copy helper with fallback when navigator.clipboard is unavailable
@@ -56,6 +53,13 @@ export default function Home() {
         // ignore
       }
     }
+  };
+
+  // Refresh function to clear current chat and start fresh
+  const handleRefresh = () => {
+    const t: ChatThread = { id: crypto.randomUUID(), title: 'New Chat', messages: [], createdAt: Date.now() };
+    setThreads(prev => [t, ...prev]);
+    setActiveId(t.id);
   };
 
   const toggle = (id: string) => {
@@ -159,7 +163,7 @@ export default function Home() {
 
             <div className={`flex items-center justify-between mb-2 ${sidebarOpen ? '' : 'opacity-0 pointer-events-none'}`}>
               <div className="flex items-center gap-3">
-                <div className="w-2.5 h-2.5 rounded-full bg-[#FF9933]" />
+                <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-blue-400 to-purple-500" />
                 <h2 className="text-sm font-semibold">Bharat Minds</h2>
               </div>
 
@@ -211,7 +215,7 @@ export default function Home() {
                     setThreads(prev => [t, ...prev]);
                     setActiveId(t.id);
                   }}
-                  className="mb-3 text-sm px-3 py-2 rounded-md bg-[#FF9933] hover:bg-[#E67E22]"
+                  className="mb-3 text-sm px-3 py-2 rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border border-blue-400/20 transition-all duration-200"
                 >
                   + New Chat
                 </button>
@@ -235,7 +239,7 @@ export default function Home() {
                     setThreads(prev => [t, ...prev]);
                     setActiveId(t.id);
                   }}
-                  className="h-8 w-8 rounded-full bg-[#FF9933] hover:bg-[#E67E22] flex items-center justify-center mb-4 mx-auto shrink-0"
+                  className="h-8 w-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 flex items-center justify-center mb-4 mx-auto shrink-0 transition-all duration-200"
                 >
                   <Plus size={14} />
                 </button>
@@ -271,7 +275,7 @@ export default function Home() {
               <div className="absolute left-0 top-0 h-full w-72 bg-zinc-900/90 border-r border-white/10 p-3">
                 <div className="flex items-center justify-between mb-2">
                                   <div className="flex items-center gap-2">
-                  <div className="w-2.5 h-2.5 rounded-full bg-[#FF9933]" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-blue-400 to-purple-500" />
                   <h2 className="text-sm font-semibold">Bharat Minds</h2>
                 </div>
                   <button onClick={() => setMobileSidebarOpen(false)} className="text-xs px-2 py-1 rounded bg-white/10">Close</button>
@@ -283,7 +287,7 @@ export default function Home() {
                     setActiveId(t.id);
                     setMobileSidebarOpen(false);
                   }}
-                  className="mb-3 text-sm px-3 py-2 w-full rounded-md bg-[#FF9933] hover:bg-[#E67E22]"
+                  className="mb-3 text-sm px-3 py-2 w-full rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border border-blue-400/20 transition-all duration-200"
                 >
                   + New Chat
                 </button>
@@ -302,44 +306,29 @@ export default function Home() {
           {/* Main content */}
           <div className="flex-1 min-w-0 flex flex-col h-[calc(100vh-2rem)] lg:h-[calc(100vh-3rem)] overflow-hidden">
             {/* Top bar */}
-          <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <button onClick={() => setMobileSidebarOpen(true)} className="lg:hidden text-xs px-2 py-1 rounded bg-white/10 border border-white/15">Menu</button>
-                <h1 className="text-lg font-semibold">Bharat Minds</h1>
+          <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <button onClick={() => setMobileSidebarOpen(true)} className="lg:hidden text-xs px-3 py-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">Menu</button>
+                <div className="flex items-center gap-2">
+                  <Sparkles className="h-5 w-5 text-blue-400" />
+                  <h1 className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Bharat Minds</h1>
+                </div>
               </div>
               <div className="flex items-center gap-2">
-                <a
-                  href="https://x.com/byteHumi"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-xs text-zinc-300 hover:text-white"
-                  title="Open Sahib on X"
+                <button
+                  onClick={handleRefresh}
+                  className="inline-flex items-center gap-2 text-xs px-3 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 text-white border border-blue-400/20 hover:from-blue-600 hover:to-purple-700 transition-all duration-200 shadow-lg"
+                  title="Start new chat"
                 >
-                  <Image
-                    src="/image.png"
-                    alt="Sahib avatar"
-                    width={20}
-                    height={20}
-                    className="h-5 w-5 rounded-full object-cover"
-                  />
-                  <span className="opacity-90 hidden sm:inline text-sm">Made by <span className="font-semibold underline decoration-dotted">Sahib</span></span>
-                </a>
-                <a
-                  href="https://github.com/sahibsingh13/bharat-minds"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded bg-[#FF9933] text-white border border-white/10 hover:bg-[#E67E22] ml-1"
-                  title="Star on GitHub"
-                >
-                  <Github size={14} />
-                  <span className="hidden sm:inline">Star on GitHub</span>
-                  <span className="sm:hidden">Star</span>
-                </a>
+                  <RefreshCw size={14} />
+                  <span className="hidden sm:inline">New Chat</span>
+                  <span className="sm:hidden">New</span>
+                </button>
               </div>
             </div>
 
             {/* Selected models row + Change button */}
-            <div className="mb-3 flex flex-wrap items-center gap-2">
+            <div className="mb-4 flex flex-wrap items-center gap-3">
               {selectedModels.map((m) => {
                 const isFree = /(\(|\s)free\)/i.test(m.label);
                 const isUncensored = /uncensored/i.test(m.label) || /venice/i.test(m.model);
@@ -347,44 +336,42 @@ export default function Home() {
                 <button
                   key={m.id}
                   onClick={() => toggle(m.id)}
-                  className={`h-9 px-3 text-xs rounded-full text-white border flex items-center gap-2 bg-white/5 hover:bg-white/10 transition-colors ${
-                    m.good ? 'border-amber-300/40' : isFree ? 'border-emerald-300/40' : 'border-white/10'
+                  className={`h-10 px-4 text-sm rounded-xl text-white border-2 flex items-center gap-2 bg-gradient-to-r from-blue-500/10 to-purple-500/10 hover:from-blue-500/20 hover:to-purple-500/20 transition-all duration-200 ${
+                    m.good ? 'border-blue-400/50 shadow-lg shadow-blue-500/20' : isFree ? 'border-green-400/50 shadow-lg shadow-green-500/20' : 'border-white/20 hover:border-white/30'
                   }`}
                   title="Click to toggle"
                 >
                   {m.good && (
-                    <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-amber-400/15 text-amber-300 ring-1 ring-amber-300/30">
-                      <Star size={12} className="shrink-0" />
+                    <span className="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-blue-500/20 text-blue-300 ring-1 ring-blue-400/30">
+                      <Sparkles size={12} className="shrink-0" />
                       <span className="hidden sm:inline">Pro</span>
                     </span>
                   )}
                   {isFree && (
-                    <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-emerald-400/15 text-emerald-200 ring-1 ring-emerald-300/30">
-                      <span className="h-2 w-2 rounded-full bg-emerald-300" />
+                    <span className="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-green-500/20 text-green-300 ring-1 ring-green-400/30">
+                      <span className="h-2 w-2 rounded-full bg-green-300" />
                       <span className="hidden sm:inline">Free</span>
                     </span>
                   )}
                   {isUncensored && (
-                    <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-rose-500/20 text-rose-200 ring-1 ring-rose-300/30">
-                      <span className="h-2 w-2 rounded-full bg-rose-200" />
+                    <span className="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-red-500/20 text-red-300 ring-1 ring-red-400/30">
+                      <span className="h-2 w-2 rounded-full bg-red-300" />
                       <span className="hidden sm:inline">Uncensored</span>
                     </span>
                   )}
-                  <span className="truncate max-w-[180px]">{m.label}</span>
-                  <span className="relative inline-flex h-4 w-7 items-center rounded-full bg-orange-500/40">
-                    <span className="h-3 w-3 rounded-full bg-orange-200 translate-x-3.5" />
-                  </span>
+                  <span className="truncate max-w-[180px] font-medium">{m.label}</span>
+                  <div className="w-2 h-2 rounded-full bg-gradient-to-r from-blue-400 to-purple-500 animate-pulse"></div>
                 </button>
               );})}
               {selectedModels.length === 0 && (
                 <span className="text-xs text-zinc-400">No models selected</span>
               )}
-              <div className="ml-auto flex items-center gap-2">
+              <div className="ml-auto flex items-center gap-3">
                 <button
                   onClick={() => setModelsModalOpen(true)}
-                  className="text-xs px-2.5 py-1 rounded border border-white/15 bg-white/5 hover:bg-white/10"
+                  className="text-sm px-4 py-2 rounded-xl border-2 border-white/20 bg-gradient-to-r from-blue-500/10 to-purple-500/10 hover:from-blue-500/20 hover:to-purple-500/20 hover:border-white/30 transition-all duration-200"
                 >
-                  Change models
+                  Change Models
                 </button>
                 <Settings />
               </div>
@@ -524,7 +511,7 @@ export default function Home() {
                           )}
                           <span className="truncate">{m.label}</span>
                         </div>
-                        {loadingIds.includes(m.id) && <span className="text-[11px] text-[#FF9933]">Thinking…</span>}
+                        {loadingIds.includes(m.id) && <span className="text-[11px] text-blue-400">Thinking…</span>}
                       </div>
                     );})}
                   </div>
@@ -614,7 +601,7 @@ export default function Home() {
                                         <div className="mt-2">
                                           <button
                                             onClick={() => window.dispatchEvent(new Event('open-settings'))}
-                                            className="text-xs px-2.5 py-1 rounded bg-[#FF9933] text-white border border-white/10 hover:bg-[#E67E22]"
+                                            className="text-xs px-2.5 py-1 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 text-white border border-blue-400/20 hover:from-blue-600 hover:to-purple-700 transition-all duration-200"
                                           >
                                             Add keys
                                           </button>
@@ -623,7 +610,7 @@ export default function Home() {
                                     </>
                                   ) : loadingIds.includes(m.id) ? (
                                     <div className="w-full self-stretch animate-pulse space-y-2">
-                                      <div className="h-2.5 w-1/3 rounded bg-[#FF9933]/30" />
+                                      <div className="h-2.5 w-1/3 rounded bg-blue-400/30" />
                                       <div className="h-2 rounded bg-white/10" />
                                       <div className="h-2 rounded bg-white/10 w-5/6" />
                                       <div className="h-2 rounded bg-white/10 w-2/3" />
