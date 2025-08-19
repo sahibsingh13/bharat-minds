@@ -313,19 +313,19 @@ export default function Home() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-xs text-zinc-300 hover:text-white"
-                  title="Open Niladri on X"
+                  title="Open Sahib on X"
                 >
                   <Image
                     src="/image.png"
-                    alt="Niladri avatar"
+                    alt="Sahib avatar"
                     width={20}
                     height={20}
                     className="h-5 w-5 rounded-full object-cover"
                   />
-                  <span className="opacity-90 hidden sm:inline text-sm">Made by <span className="font-semibold underline decoration-dotted">Niladri</span></span>
+                  <span className="opacity-90 hidden sm:inline text-sm">Made by <span className="font-semibold underline decoration-dotted">Sahib</span></span>
                 </a>
                 <a
-                  href="https://github.com/NiladriHazra/Open-Fiesta"
+                  href="https://github.com/sahibsingh13/bharat-minds"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded bg-[#FF9933] text-white border border-white/10 hover:bg-[#E67E22] ml-1"

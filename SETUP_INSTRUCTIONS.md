@@ -26,7 +26,7 @@ Replace `YOUR_GITHUB_USERNAME` with your actual GitHub username.
 
 **Example:**
 ```bash
-./setup-repo.sh john-doe
+./setup-repo.sh sahibsingh13
 ```
 
 ## Step 3: Verify the Push
@@ -42,7 +42,7 @@ The script will:
 - Beautiful Indian-inspired color scheme (saffron and deep blue)
 - Multi-model AI chat interface
 - Modern, responsive design
-- Complete transformation from the original Open-Fiesta
+- Complete original project by Sahib Singh
 
 ## Troubleshooting
 

@@ -1,6 +1,6 @@
 # Bharat Minds
 
-A modern AI chat interface that allows you to compare responses from multiple AI models simultaneously. Built with Next.js, TypeScript, and Tailwind CSS.
+A modern AI chat interface that allows you to compare responses from multiple AI models simultaneously. Built with Next.js, TypeScript, and Tailwind CSS, featuring a beautiful Indian-inspired design.
 
 ## Features
 
@@ -25,7 +25,7 @@ A modern AI chat interface that allows you to compare responses from multiple AI
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/bharat-minds.git
+   git clone https://github.com/sahibsingh13/bharat-minds.git
    cd bharat-minds
    ```
 
@@ -72,12 +72,14 @@ The application features a beautiful Indian-inspired color palette:
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
+## About the Creator
+
+**Bharat Minds** was created by **Sahib Singh** as a modern AI chat interface that combines cutting-edge technology with beautiful Indian-inspired design. The project aims to provide users with a seamless way to interact with multiple AI models while celebrating the rich cultural heritage of India.
+
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is proprietary and all rights are reserved by Sahib Singh.
 
-## Acknowledgments
+---
 
-- Original project by [Niladri Hazra](https://github.com/NiladriHazra/Open-Fiesta)
-- Inspired by the rich cultural heritage of India
-- Built with modern web technologies for optimal performance and user experience
+**Built with ❤️ by Sahib Singh**
