@@ -59,18 +59,18 @@ export default function Settings() {
       <button onClick={() => setOpen(true)} className="text-sm px-4 py-2 rounded-lg border border-white/20 bg-white/5 hover:bg-white/10 hover:border-white/30 transition-colors">⚙️ Preferences</button>
       {open && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
-          <div className="w-full max-w-2xl rounded-lg border border-white/10 bg-gray-900 text-white p-0 shadow-xl overflow-hidden">
+          <div className="w-full max-w-2xl h-[90dvh] sm:h-[80dvh] rounded-lg border border-white/10 bg-gray-900 text-white p-0 shadow-xl overflow-hidden">
             <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
               <h2 className="text-base font-semibold">Preferences</h2>
               <button onClick={() => setOpen(false)} className="text-sm opacity-75 hover:opacity-100">Close</button>
             </div>
-            <div className="flex">
-              <div className="w-40 border-r border-white/10 p-3 space-y-1 text-sm">
+            <div className="flex h-[calc(100%-44px)]">
+              <div className="w-40 border-r border-white/10 p-3 space-y-1 text-sm shrink-0">
                 <button onClick={() => setTab('profile')} className={`w-full text-left px-3 py-2 rounded ${tab==='profile'?'bg-white/10':''}`}>Profile</button>
                 <button onClick={() => setTab('models')} className={`w-full text-left px-3 py-2 rounded ${tab==='models'?'bg-white/10':''}`}>Models</button>
                 <button onClick={() => setTab('keys')} className={`w-full text-left px-3 py-2 rounded ${tab==='keys'?'bg-white/10':''}`}>API Keys</button>
               </div>
-              <div className="flex-1 p-4">
+              <div className="flex-1 p-4 overflow-y-auto">
                 {tab==='profile' && (
                   <div className="space-y-3">
                     <div className="text-sm text-zinc-300">Set your display name.</div>
