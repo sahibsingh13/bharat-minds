@@ -13,23 +13,23 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Bharat Minds - AI Chat Interface",
-  description: "A modern AI chat interface that allows you to compare responses from multiple AI models simultaneously. Built with Next.js and featuring a beautiful modern design.",
-  keywords: ["AI", "chat", "artificial intelligence", "Next.js", "TypeScript", "multi-model", "Gemini", "Llama"],
+  title: "Bharat Minds - AI Chat",
+  description: "Simple, clean, GPT-like chat experience with multi-model compare.",
+  keywords: ["AI", "chat", "LLM", "Next.js", "TypeScript", "compare", "models"],
   authors: [{ name: "Sahib Singh" }],
   creator: "Sahib Singh",
   publisher: "Sahib Singh",
   robots: "index, follow",
   openGraph: {
-    title: "Bharat Minds - AI Chat Interface",
-    description: "Compare responses from multiple AI models with a beautiful modern interface",
+    title: "Bharat Minds - AI Chat",
+    description: "Compare responses from multiple AI models with a simple, clean interface",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Bharat Minds - AI Chat Interface",
-    description: "Compare responses from multiple AI models with a beautiful modern interface",
+    title: "Bharat Minds - AI Chat",
+    description: "Compare responses from multiple AI models with a simple, clean interface",
     creator: "@sahibsingh13",
   },
   icons: {
