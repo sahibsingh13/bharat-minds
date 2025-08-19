@@ -123,19 +123,15 @@ export default function HomeChat() {
       <aside className="hidden md:flex w-64 shrink-0 flex-col border-r border-white/10 bg-white/5">
         <div className="p-3 border-b border-white/10 flex items-center justify-between">
           <div className="inline-flex items-center gap-2">
-            <Sparkles className="h-4 w-4 text-orange-400" />
+            <Sparkles className="h-4 w-4 text-blue-400" />
             <span className="font-semibold text-sm">Bharat Minds</span>
           </div>
           <button
-            onClick={() => {
-              const t: ChatThread = { id: crypto.randomUUID(), title: 'New Chat', messages: [], createdAt: Date.now() };
-              setThreads(prev => [t, ...prev]);
-              setActiveId(t.id);
-            }}
-            className="text-xs px-2 py-1 rounded bg-orange-500/20 border border-orange-400/30 hover:bg-orange-500/30 cursor-pointer"
-            title="New chat"
+            onClick={() => setRightOpen(true)}
+            className="relative h-8 w-8 rounded-full border border-blue-400/30 overflow-hidden cursor-pointer"
+            title="Open settings"
           >
-            New
+            <span className="absolute inset-0 animate-pulse bg-blue-500/20" />
           </button>
         </div>
         <div className="flex-1 overflow-y-auto p-2 space-y-1">
@@ -170,16 +166,8 @@ export default function HomeChat() {
         <div className="sticky top-0 z-10 bg-black/70 backdrop-blur border-b border-white/10 px-3 py-2">
           <div className="flex items-center justify-between gap-2">
             <div className="flex items-center gap-2">
-              <button
-                onClick={() => {
-                  const t: ChatThread = { id: crypto.randomUUID(), title: 'New Chat', messages: [], createdAt: Date.now() };
-                  setThreads(prev => [t, ...prev]);
-                  setActiveId(t.id);
-                }}
-                className="inline-flex items-center gap-2 text-xs px-3 py-2 rounded-lg bg-orange-500 text-white border border-orange-400/40 hover:bg-orange-600 cursor-pointer"
-              >
-                <Plus size={14} /> New Chat
-              </button>
+              
+              
             </div>
             <div className="flex items-center gap-3">
               {/* Selected models chips */}
@@ -197,10 +185,20 @@ export default function HomeChat() {
 
         {/* Message list */}
         <div className="flex-1 overflow-y-auto px-4 py-4" id="messages-container">
-          {turns.length === 0 && (
+          {turns.length === 0 && selectedModels.length === 0 && (
             <div className="max-w-2xl mx-auto text-center text-zinc-400 mt-10">
-              <div className="mx-auto w-20 h-20 rounded-full bg-blue-500/20 border border-blue-400/30 animate-pulse" />
-              <div className="mt-3">Start a conversation. Select models in the panel, ask a question, and compare answers.</div>
+              <div className="mx-auto w-20 h-20 rounded-full bg-blue-500/20 border border-blue-400/30 overflow-hidden">
+                <div className="w-full h-full animate-[pulse_2s_ease-in-out_infinite]" />
+              </div>
+              <div className="mt-3">Start a conversation from the settings panel and compare answers.</div>
+            </div>
+          )}
+          {turns.length === 0 && selectedModels.length > 0 && (
+            <div className="max-w-2xl mx-auto text-center text-zinc-400 mt-10">
+              <div className="mx-auto w-20 h-20 rounded-full bg-blue-500/20 border border-blue-400/30 overflow-hidden">
+                <div className="w-full h-full animate-[pulse_2s_ease-in-out_infinite]" />
+              </div>
+              <div className="mt-3">Models selected. Ask your first question to get started.</div>
             </div>
           )}
           <div className="max-w-3xl mx-auto space-y-6">
