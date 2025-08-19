@@ -152,7 +152,7 @@ export default function AiInput() {
                 className={cn(
                   "cursor-pointer relative rounded-full p-2 bg-black/5 dark:bg-white/5",
                   imagePreview
-                    ? "bg-[#ff3f17]/15 border border-[#ff3f17] text-[#ff3f17]"
+                    ? "bg-blue-500/15 border border-blue-500 text-blue-400"
                     : "bg-black/5 dark:bg-white/5 text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white"
                 )}
               >
@@ -165,7 +165,7 @@ export default function AiInput() {
                 <Paperclip
                   className={cn(
                     "w-4 h-4 text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white transition-colors",
-                    imagePreview && "text-[#ff3f17]"
+                    imagePreview && "text-blue-400"
                   )}
                 />
                 {imagePreview && (
@@ -194,7 +194,7 @@ export default function AiInput() {
                 className={cn(
                   "rounded-full transition-all flex items-center gap-2 px-1.5 py-1 border h-8",
                   showSearch
-                    ? "bg-[#ff3f17]/15 border-[#ff3f17] text-[#ff3f17]"
+                    ? "bg-blue-500/15 border-blue-500 text-blue-400"
                     : "bg-black/5 dark:bg-white/5 border-transparent text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white"
                 )}
               >
@@ -222,7 +222,7 @@ export default function AiInput() {
                     <Globe
                       className={cn(
                         "w-4 h-4",
-                        showSearch ? "text-[#ff3f17]" : "text-inherit"
+                        showSearch ? "text-blue-400" : "text-inherit"
                       )}
                     />
                   </motion.div>
@@ -237,7 +237,7 @@ export default function AiInput() {
                       }}
                       exit={{ width: 0, opacity: 0 }}
                       transition={{ duration: 0.2 }}
-                      className="text-sm overflow-hidden whitespace-nowrap text-[#ff3f17] flex-shrink-0"
+                      className="text-sm overflow-hidden whitespace-nowrap text-blue-400 flex-shrink-0"
                     >
                       Search
                     </motion.span>
@@ -252,7 +252,7 @@ export default function AiInput() {
                 className={cn(
                   "rounded-full p-2 transition-colors",
                   value
-                    ? "bg-[#ff3f17]/15 text-[#ff3f17]"
+                    ? "bg-blue-500/15 text-blue-400"
                     : "bg-black/5 dark:bg-white/5 text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white"
                 )}
               >

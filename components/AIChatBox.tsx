@@ -207,7 +207,7 @@ export function AiInput({ onSubmit, loading = false }: { onSubmit: (text: string
                 className={cn(
                   "cursor-pointer relative rounded-full p-2 bg-black/5 dark:bg-white/5",
                   imagePreview
-                    ? "bg-[#ff3f17]/15 border border-[#ff3f17] text-[#ff3f17]"
+                    ? "bg-blue-500/15 border border-blue-500 text-blue-400"
                     : "text-white/60 hover:text-white"
                 )}
               >

@@ -187,7 +187,7 @@ export default function Home() {
                 <div className="flex flex-col sm:flex-row gap-2 justify-end mt-4">
                   <button
                     onClick={() => window.dispatchEvent(new Event('open-settings'))}
-                    className="text-sm px-3 py-2 rounded bg-[#FF9933] text-white border border-white/10 hover:bg-[#E67E22]"
+                    className="text-sm px-3 py-2 rounded bg-blue-500 text-white border border-white/10 hover:bg-blue-600"
                   >
                     Get API key for free
                   </button>
@@ -353,8 +353,8 @@ export default function Home() {
                     </span>
                   )}
                   {isUncensored && (
-                    <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-red-500/10 text-red-300">
-                      <span className="h-2 w-2 rounded-full bg-red-300" />
+                    <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-orange-500/10 text-orange-300">
+                      <span className="h-2 w-2 rounded-full bg-orange-300" />
                       <span className="hidden sm:inline">Uncensored</span>
                     </span>
                   )}
@@ -457,8 +457,8 @@ export default function Home() {
                                       </span>
                                     )}
                                     {unc && (
-                                      <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-rose-500/20 text-rose-200 ring-1 ring-rose-300/30">
-                                        <span className="h-2 w-2 rounded-full bg-rose-200" />
+                                      <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-orange-500/20 text-orange-200 ring-1 ring-orange-300/30">
+                                        <span className="h-2 w-2 rounded-full bg-orange-200" />
                                         <span className="hidden sm:inline">Uncensored</span>
                                       </span>
                                     )}
