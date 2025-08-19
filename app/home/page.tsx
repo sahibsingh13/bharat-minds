@@ -2,6 +2,7 @@
 import { useMemo, useState } from "react";
 import { Sparkles, Plus, Trash2, Cog } from "lucide-react";
 import { useLocalStorage } from "@/lib/useLocalStorage";
+import Logo from "@/components/Logo";
 import { MODEL_CATALOG } from "@/lib/models";
 import { AiModel, ApiKeys, ChatMessage, ChatThread } from "@/lib/types";
 import { callGemini, callOpenRouter } from "@/lib/client";
@@ -122,10 +123,7 @@ export default function HomeChat() {
       {/* Left sidebar: chats */}
       <aside className="hidden md:flex w-64 shrink-0 flex-col border-r border-white/10 bg-white/5">
         <div className="p-3 border-b border-white/10 flex items-center justify-between">
-          <div className="inline-flex items-center gap-2">
-            <Sparkles className="h-4 w-4 text-blue-400" />
-            <span className="font-semibold text-sm">Bharat Minds</span>
-          </div>
+          <Logo size={18} />
           <button
             onClick={() => setRightOpen(true)}
             className="relative h-8 w-8 rounded-full border border-blue-400/30 overflow-hidden cursor-pointer"
@@ -161,7 +159,7 @@ export default function HomeChat() {
       </aside>
 
       {/* Main column */}
-      <div className="flex-1 min-w-0 flex flex-col h-screen">
+      <div className="flex-1 min-w-0 flex flex-col h-dvh">
         {/* Top bar */}
         <div className="sticky top-0 z-10 bg-black/70 backdrop-blur border-b border-white/10 px-3 py-2">
           <div className="flex items-center justify-between gap-2">
@@ -170,12 +168,6 @@ export default function HomeChat() {
               
             </div>
             <div className="flex items-center gap-3">
-              {/* Selected models chips */}
-              <div className="hidden md:flex items-center gap-1">
-                {selectedModels.map(m => (
-                  <span key={m.id} className="text-[11px] px-2 py-0.5 rounded-full bg-white/10 border border-white/15">{m.label}</span>
-                ))}
-              </div>
               <button onClick={() => setRightOpen(v => !v)} className="h-8 w-8 rounded-full border border-white/15 bg-white/5 hover:bg-white/10 cursor-pointer inline-flex items-center justify-center" title="Settings">
                 <Cog size={14} />
               </button>

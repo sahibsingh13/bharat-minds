@@ -38,8 +38,12 @@ export default function Settings() {
       const val = userName.trim();
       localStorage.setItem('bharat-minds:user-name', val);
       setNameSaved(!!val);
-      // toast-like inline message
-      alert('Username saved successfully');
+      // lightweight toast
+      const t = document.createElement('div');
+      t.textContent = 'Username saved successfully';
+      t.className = 'fixed left-1/2 -translate-x-1/2 bottom-6 z-[100] px-4 py-2 rounded bg-blue-600 text-white text-sm shadow-lg';
+      document.body.appendChild(t);
+      setTimeout(()=>{ t.remove(); }, 1500);
     } catch {}
   }
 
