@@ -160,69 +160,6 @@ export default function Home() {
                 <div className="w-2.5 h-2.5 rounded-full bg-blue-500" />
                 <h2 className="text-sm font-semibold">Bharat Minds</h2>
               </div>
-            </div>
-
-          {/* Sidebar content */}
-          {sidebarOpen ? (
-            <>
-              <button
-                onClick={() => {
-                  const t: ChatThread = { id: crypto.randomUUID(), title: 'New Chat', messages: [], createdAt: Date.now() };
-                  setThreads(prev => [t, ...prev]);
-                  setActiveId(t.id);
-                }}
-                className="mb-3 text-sm px-3 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white border border-blue-500/20 transition-colors"
-              >
-                + New Chat
-              </button>
-              <div className="text-xs uppercase tracking-wide opacity-60 mb-2">Chats</div>
-              <div className="flex-1 overflow-y-auto space-y-1 pr-1">
-                {threads.length === 0 && <div className="text-xs opacity-60">No chats yet</div>}
-                {threads.map(t => (
-                  <button key={t.id} onClick={() => setActiveId(t.id)} className={`w-full text-left px-2 py-2 rounded-md text-sm border ${t.id === activeId ? 'bg-white/15 border-white/20' : 'bg-white/5 border-white/10 hover:bg-white/10'}`}>
-                    {t.title || 'Untitled'}
-                  </button>
-                ))}
-              </div>
-            </>
-          ) : (
-            <div className="flex-1 flex flex-col items-center pt-6">
-              {/* New chat button */}
-              <button
-                title="New Chat"
-                onClick={() => {
-                  const t: ChatThread = { id: crypto.randomUUID(), title: 'New Chat', messages: [], createdAt: Date.now() };
-                  setThreads(prev => [t, ...prev]);
-                  setActiveId(t.id);
-                }}
-                className="h-8 w-8 rounded-full bg-blue-500 hover:bg-blue-600 flex items-center justify-center mb-4 mx-auto shrink-0 transition-colors"
-              >
-                <Plus size={14} />
-              </button>
-
-              {/* Mini chat boxes list */}
-              <div className="flex-1 overflow-y-auto w-full flex flex-col items-center gap-2 pt-1 pb-2">
-                {threads.map(t => {
-                  const isActive = t.id === activeId;
-                  const letter = (t.title || 'Untitled').trim()[0]?.toUpperCase() || 'N';
-                  return (
-                    <button
-                      key={t.id}
-                      title={t.title || 'Untitled'}
-                      onClick={() => setActiveId(t.id)}
-                      className={`h-6 w-6 aspect-square rounded-full flex items-center justify-center transition-colors focus-visible:outline-none mx-auto shrink-0 
-                        ${isActive ? 'bg-white/20 ring-1 ring-white/30 ring-offset-1 ring-offset-black' : 'bg-white/5 hover:bg-white/10'}`}
-                    >
-                      <span className="text-[10px] font-semibold leading-none">
-                        {letter}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-                    )}
-          </aside>
 
           {/* First-visit API keys modal */}
           {showFirstVisitNote && (
@@ -260,16 +197,81 @@ export default function Home() {
             </div>
           )}
 
+            {/* First-visit API keys notice is now a centered modal shown below */}
+            </div>
+
+            {/* When collapsed, show only a big plus button centered */}
+            {sidebarOpen ? (
+              <>
+                <button
+                  onClick={() => {
+                    const t: ChatThread = { id: crypto.randomUUID(), title: 'New Chat', messages: [], createdAt: Date.now() };
+                    setThreads(prev => [t, ...prev]);
+                    setActiveId(t.id);
+                  }}
+                  className="mb-3 text-sm px-3 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white border border-blue-500/20 transition-colors"
+                >
+                  + New Chat
+                </button>
+                <div className="text-xs uppercase tracking-wide opacity-60 mb-2">Chats</div>
+                <div className="flex-1 overflow-y-auto space-y-1 pr-1">
+                  {threads.length === 0 && <div className="text-xs opacity-60">No chats yet</div>}
+                  {threads.map(t => (
+                    <button key={t.id} onClick={() => setActiveId(t.id)} className={`w-full text-left px-2 py-2 rounded-md text-sm border ${t.id === activeId ? 'bg-white/15 border-white/20' : 'bg-white/5 border-white/10 hover:bg-white/10'}`}>
+                      {t.title || 'Untitled'}
+                    </button>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <div className="flex-1 flex flex-col items-center pt-6">
+                {/* New chat button */}
+                <button
+                  title="New Chat"
+                  onClick={() => {
+                    const t: ChatThread = { id: crypto.randomUUID(), title: 'New Chat', messages: [], createdAt: Date.now() };
+                    setThreads(prev => [t, ...prev]);
+                    setActiveId(t.id);
+                  }}
+                  className="h-8 w-8 rounded-full bg-blue-500 hover:bg-blue-600 flex items-center justify-center mb-4 mx-auto shrink-0 transition-colors"
+                >
+                  <Plus size={14} />
+                </button>
+
+                {/* Mini chat boxes list */}
+                <div className="flex-1 overflow-y-auto w-full flex flex-col items-center gap-2 pt-1 pb-2">
+                  {threads.map(t => {
+                    const isActive = t.id === activeId;
+                    const letter = (t.title || 'Untitled').trim()[0]?.toUpperCase() || 'N';
+                    return (
+                      <button
+                        key={t.id}
+                        title={t.title || 'Untitled'}
+                        onClick={() => setActiveId(t.id)}
+                        className={`h-6 w-6 aspect-square rounded-full flex items-center justify-center transition-colors focus-visible:outline-none mx-auto shrink-0 
+                          ${isActive ? 'bg-white/20 ring-1 ring-white/30 ring-offset-1 ring-offset-black' : 'bg-white/5 hover:bg-white/10'}`}
+                      >
+                        <span className="text-[10px] font-semibold leading-none">
+                          {letter}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </aside>
+
           {/* Mobile sidebar drawer */}
           {mobileSidebarOpen && (
             <div className="lg:hidden fixed inset-0 z-40">
               <div className="absolute inset-0 bg-black/60" onClick={() => setMobileSidebarOpen(false)} />
               <div className="absolute left-0 top-0 h-full w-72 bg-black/90 border-r border-white/10 p-3">
                 <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center gap-2">
-                    <div className="w-2.5 h-2.5 rounded-full bg-blue-500" />
-                    <h2 className="text-sm font-semibold">Bharat Minds</h2>
-                  </div>
+                                  <div className="flex items-center gap-2">
+                  <div className="w-2.5 h-2.5 rounded-full bg-blue-500" />
+                  <h2 className="text-sm font-semibold">Bharat Minds</h2>
+                </div>
                   <button onClick={() => setMobileSidebarOpen(false)} className="text-xs px-2 py-1 rounded bg-white/10">Close</button>
                 </div>
                 <button
@@ -295,9 +297,8 @@ export default function Home() {
               </div>
             </div>
           )}
-
-          {/* Main content */}
-          <div className="flex-1 min-w-0 flex flex-col h-full overflow-hidden px-4 py-4">
+                      {/* Main content */}
+            <div className="flex-1 min-w-0 flex flex-col h-full overflow-hidden">
               {/* Sticky Top bar */}
               <div className="sticky top-0 z-20 bg-black/80 backdrop-blur-sm border-b border-white/10 px-4 py-3">
                 <div className="flex items-center justify-between">
@@ -325,8 +326,8 @@ export default function Home() {
             {/* Selected models row + Change button */}
             <div className="mb-4 flex flex-wrap items-center gap-3">
               {selectedModels.map((m) => {
-                const isFree = m.label.toLowerCase().includes('free');
-                const isUncensored = m.label.toLowerCase().includes('uncensored') || m.model.toLowerCase().includes('venice');
+                const isFree = /(\(|\s)free\)/i.test(m.label);
+                const isUncensored = /uncensored/i.test(m.label) || /venice/i.test(m.model);
                 return (
                 <button
                   key={m.id}
@@ -391,8 +392,8 @@ export default function Home() {
                         Others: [],
                       };
                       const seen = new Set<string>();
-                      const isFree = (m: AiModel) => m.label.toLowerCase().includes('free') || m.free;
-                      const isUnc = (m: AiModel) => m.label.toLowerCase().includes('uncensored') || m.model.toLowerCase().includes('venice');
+                      const isFree = (m: AiModel) => /(\(|\s)free\)/i.test(m.label) || m.free;
+                      const isUnc = (m: AiModel) => /uncensored/i.test(m.label) || /venice/i.test(m.model);
                       const staticFavIds = new Set<string>([
                         'llama-3.3-70b-instruct',
                         'gemini-2.5-pro',
@@ -490,7 +491,7 @@ export default function Home() {
                     style={{ gridTemplateColumns: `repeat(${selectedModels.length}, minmax(260px, 1fr))` }}
                   >
                     {selectedModels.map((m) => {
-                                                const isFree = m.label.toLowerCase().includes('free');
+                      const isFree = /(\(|\s)free\)/i.test(m.label);
                       return (
                       <div key={m.id} className={`px-1 py-5 min-h-[60px] border-b flex items-center justify-between overflow-visible ${m.good ? 'border-amber-300/40' : 'border-white/10'}`}>
                         <div className={`text-[13px] leading-normal font-medium pr-2 inline-flex items-center gap-1.5 min-w-0 ${m.good || isFree ? 'opacity-100 text-white' : 'opacity-90'}`}>
@@ -554,11 +555,11 @@ export default function Home() {
                         style={{ gridTemplateColumns: `repeat(${selectedModels.length}, minmax(260px, 1fr))` }}
                       >
                         {selectedModels.map((m) => {
-                          const isFree = m.label.toLowerCase().includes('free');
+                          const isFree = /(\(|\s)free\)/i.test(m.label);
                           const ans = row.answers.find((a) => a.modelId === m.id);
                           return (
                             <div key={m.id} className="h-full">
-                              <div className={`group relative rounded-md p-3 h-full min-h-[160px] flex overflow-hidden ring-1 ${m.good ? 'bg-amber-400/10 ring-amber-300/30' : isFree ? 'bg-emerald-400/10 ring-emerald-300/30' : 'bg-white/5 ring-white/5'}`}>
+                              <div className={`group relative rounded-md p-3 h-full min-h-[160px] flex overflow-hidden ring-1 ${m.good ? 'bg-gradient-to-b from-amber-400/10 to-white/5 ring-amber-300/30' : isFree ? 'bg-gradient-to-b from-emerald-400/10 to-white/5 ring-emerald-300/30' : 'bg-white/5 ring-white/5'}`}>
                                 {ans && (
                                   <button
                                     onClick={() => {
@@ -591,7 +592,7 @@ export default function Home() {
                                         try {
                                           const txt = String(ans.content || '');
                                           // Show CTA for shared-key guidance (OpenRouter or Gemini)
-                                          const show = txt.includes('add your own') && (txt.includes('openrouter') || txt.includes('gemini')) && txt.includes('api key');
+                                          const show = /add your own\s+(?:openrouter|gemini)\s+api key/i.test(txt);
                                           return show;
                                         } catch { return false; }
                                       })() && (
