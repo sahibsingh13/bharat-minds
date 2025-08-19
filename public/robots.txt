@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://bharat-minds.vercel.app/sitemap.xml
+
+# Disallow API routes
+Disallow: /api/
