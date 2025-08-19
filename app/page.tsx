@@ -159,8 +159,8 @@ export default function Home() {
 
             <div className={`flex items-center justify-between mb-2 ${sidebarOpen ? '' : 'opacity-0 pointer-events-none'}`}>
               <div className="flex items-center gap-3">
-                <div className="w-2.5 h-2.5 rounded-full bg-[#e42a42]" />
-                <h2 className="text-sm font-semibold">OpenSource Fiesta</h2>
+                <div className="w-2.5 h-2.5 rounded-full bg-[#FF9933]" />
+                <h2 className="text-sm font-semibold">Bharat Minds</h2>
               </div>
 
           {/* First-visit API keys modal */}
@@ -184,7 +184,7 @@ export default function Home() {
                 <div className="flex flex-col sm:flex-row gap-2 justify-end mt-4">
                   <button
                     onClick={() => window.dispatchEvent(new Event('open-settings'))}
-                    className="text-sm px-3 py-2 rounded bg-[#e42a42] text-white border border-white/10 hover:bg-[#cf243a]"
+                    className="text-sm px-3 py-2 rounded bg-[#FF9933] text-white border border-white/10 hover:bg-[#E67E22]"
                   >
                     Get API key for free
                   </button>
@@ -211,7 +211,7 @@ export default function Home() {
                     setThreads(prev => [t, ...prev]);
                     setActiveId(t.id);
                   }}
-                  className="mb-3 text-sm px-3 py-2 rounded-md bg-[#e42a42] hover:bg-[#cf243a]"
+                  className="mb-3 text-sm px-3 py-2 rounded-md bg-[#FF9933] hover:bg-[#E67E22]"
                 >
                   + New Chat
                 </button>
@@ -235,7 +235,7 @@ export default function Home() {
                     setThreads(prev => [t, ...prev]);
                     setActiveId(t.id);
                   }}
-                  className="h-8 w-8 rounded-full bg-[#e42a42] hover:bg-[#cf243a] flex items-center justify-center mb-4 mx-auto shrink-0"
+                  className="h-8 w-8 rounded-full bg-[#FF9933] hover:bg-[#E67E22] flex items-center justify-center mb-4 mx-auto shrink-0"
                 >
                   <Plus size={14} />
                 </button>
@@ -270,10 +270,10 @@ export default function Home() {
               <div className="absolute inset-0 bg-black/60" onClick={() => setMobileSidebarOpen(false)} />
               <div className="absolute left-0 top-0 h-full w-72 bg-zinc-900/90 border-r border-white/10 p-3">
                 <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center gap-2">
-                    <div className="w-2.5 h-2.5 rounded-full bg-[#e42a42]" />
-                    <h2 className="text-sm font-semibold">OpenSource Fiesta</h2>
-                  </div>
+                                  <div className="flex items-center gap-2">
+                  <div className="w-2.5 h-2.5 rounded-full bg-[#FF9933]" />
+                  <h2 className="text-sm font-semibold">Bharat Minds</h2>
+                </div>
                   <button onClick={() => setMobileSidebarOpen(false)} className="text-xs px-2 py-1 rounded bg-white/10">Close</button>
                 </div>
                 <button
@@ -283,7 +283,7 @@ export default function Home() {
                     setActiveId(t.id);
                     setMobileSidebarOpen(false);
                   }}
-                  className="mb-3 text-sm px-3 py-2 w-full rounded-md bg-[#e42a42] hover:bg-[#cf243a]"
+                  className="mb-3 text-sm px-3 py-2 w-full rounded-md bg-[#FF9933] hover:bg-[#E67E22]"
                 >
                   + New Chat
                 </button>
@@ -305,7 +305,7 @@ export default function Home() {
           <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <button onClick={() => setMobileSidebarOpen(true)} className="lg:hidden text-xs px-2 py-1 rounded bg-white/10 border border-white/15">Menu</button>
-                <h1 className="text-lg font-semibold">OpenSource Fiesta</h1>
+                <h1 className="text-lg font-semibold">Bharat Minds</h1>
               </div>
               <div className="flex items-center gap-2">
                 <a
@@ -328,7 +328,7 @@ export default function Home() {
                   href="https://github.com/NiladriHazra/Open-Fiesta"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded bg-[#e42a42] text-white border border-white/10 hover:bg-[#cf243a] ml-1"
+                  className="inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded bg-[#FF9933] text-white border border-white/10 hover:bg-[#E67E22] ml-1"
                   title="Star on GitHub"
                 >
                   <Github size={14} />
@@ -524,7 +524,7 @@ export default function Home() {
                           )}
                           <span className="truncate">{m.label}</span>
                         </div>
-                        {loadingIds.includes(m.id) && <span className="text-[11px] text-[#e42a42]">Thinking…</span>}
+                        {loadingIds.includes(m.id) && <span className="text-[11px] text-[#FF9933]">Thinking…</span>}
                       </div>
                     );})}
                   </div>
@@ -614,7 +614,7 @@ export default function Home() {
                                         <div className="mt-2">
                                           <button
                                             onClick={() => window.dispatchEvent(new Event('open-settings'))}
-                                            className="text-xs px-2.5 py-1 rounded bg-[#e42a42] text-white border border-white/10 hover:bg-[#cf243a]"
+                                            className="text-xs px-2.5 py-1 rounded bg-[#FF9933] text-white border border-white/10 hover:bg-[#E67E22]"
                                           >
                                             Add keys
                                           </button>
@@ -623,7 +623,7 @@ export default function Home() {
                                     </>
                                   ) : loadingIds.includes(m.id) ? (
                                     <div className="w-full self-stretch animate-pulse space-y-2">
-                                      <div className="h-2.5 w-1/3 rounded bg-[#e42a42]/30" />
+                                      <div className="h-2.5 w-1/3 rounded bg-[#FF9933]/30" />
                                       <div className="h-2 rounded bg-white/10" />
                                       <div className="h-2 rounded bg-white/10 w-5/6" />
                                       <div className="h-2 rounded bg-white/10 w-2/3" />

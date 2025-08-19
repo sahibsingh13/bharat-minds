@@ -39,7 +39,7 @@ export default function Settings() {
                 href="https://aistudio.google.com/app/u/5/apikey?pli=1"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xs px-2.5 py-1 rounded bg-[#e42a42] text-white border border-white/10 hover:bg-[#cf243a]"
+                className="text-xs px-2.5 py-1 rounded bg-[#FF9933] text-white border border-white/10 hover:bg-[#E67E22]"
               >
                 Get API key
               </a>
@@ -51,7 +51,7 @@ export default function Settings() {
                 href="https://openrouter.ai/sign-in?redirect_url=https%3A%2F%2Fopenrouter.ai%2Fsettings%2Fkeys"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xs px-2.5 py-1 rounded bg-[#e42a42] text-white border border-white/10 hover:bg-[#cf243a]"
+                className="text-xs px-2.5 py-1 rounded bg-[#FF9933] text-white border border-white/10 hover:bg-[#E67E22]"
               >
                 Get API key
               </a>
@@ -59,7 +59,7 @@ export default function Settings() {
             <input value={openrouter} onChange={(e) => setOpenrouter(e.target.value)} placeholder="sk-or-..." className="w-full bg-black/40 border border-white/10 rounded px-3 py-2" />
             <div className="flex gap-2 justify-end mt-4">
               <button onClick={() => setOpen(false)} className="px-3 py-1.5 rounded bg-white/10 border border-white/10">Close</button>
-              <button onClick={save} className="px-3 py-1.5 rounded bg-[#e42a42] hover:bg-[#cf243a]">Save</button>
+              <button onClick={save} className="px-3 py-1.5 rounded bg-[#FF9933] hover:bg-[#E67E22]">Save</button>
             </div>
           </div>
         </div>

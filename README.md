@@ -1,78 +1,83 @@
-# Open-Fiesta
+# Bharat Minds
 
-<video controls poster="./public/osfiesta.png" width="800">
-  <source src="./public/OSFiesta.mp4" type="video/mp4" />
-  <a href="./public/OSFiesta.mp4">
-    <img src="./public/osfiesta.png" alt="Open-Fiesta preview" />
-  </a>
-  Your browser does not support the video tag.
-</video>
-
-<!-- Fallback link for renderers that don't support <video> -->
-[![Open-Fiesta](public/osfiesta.png)](public/OSFiesta.mp4)
-
-An open-source, multi-model AI chat playground built with Next.js App Router. Switch between providers and models, compare outputs side-by-side, and use optional web search and image attachments.
+A modern AI chat interface that allows you to compare responses from multiple AI models simultaneously. Built with Next.js, TypeScript, and Tailwind CSS.
 
 ## Features
 
-- __Multiple providers__: Gemini, OpenRouter (DeepSeek R1, Llama 3.3, Qwen, Mistral, Moonshot, Reka, Sarvam, etc.)
-- __Selectable model catalog__: choose up to 5 models to run
-- __Web search toggle__ per message
-- __Image attachment__ support (Gemini)
-- __Clean UI__: keyboard submit, streaming-friendly API normalization
+- **Multi-Model Chat**: Compare responses from up to 5 different AI models at once
+- **Indian-Inspired Design**: Beautiful saffron and deep blue color scheme inspired by Indian culture
+- **Real-time Streaming**: See responses as they're generated
+- **Image Support**: Upload images for visual analysis
+- **Web Search**: Enable web search for more contextual responses
+- **Local Storage**: Your API keys and chat history are stored locally
+- **Responsive Design**: Works seamlessly on desktop and mobile devices
 
-## Tech Stack
+## Supported Models
 
-- Next.js 14 (App Router, TypeScript)
-- Tailwind CSS
-- API routes for provider calls
+- **Gemini 2.5 Flash** (Google)
+- **Llama 3.3 70B Instruct** (Meta)
+- **Qwen 2.5 72B Instruct** (Alibaba)
+- **OpenAI GPT-OSS 20B** (Free)
+- **GLM 4.5 Air** (Zhipu AI)
+- And many more via OpenRouter
 
-## Quick Start
+## Getting Started
 
-1) Install deps
-```bash
-npm i
-```
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/your-username/bharat-minds.git
+   cd bharat-minds
+   ```
 
-2) Configure environment
-Create `.env.local` with the keys you plan to use:
-```bash
-# OpenRouter (recommended for most free models)
-OPENROUTER_API_KEY=... 
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-# Gemini (for Gemini models and image input)
-GOOGLE_GENERATIVE_AI_API_KEY=...
-```
+3. **Set up API keys** (optional)
+   - Get a [Gemini API key](https://aistudio.google.com/app/u/5/apikey?pli=1)
+   - Get an [OpenRouter API key](https://openrouter.ai/sign-in?redirect_url=https%3A%2F%2Fopenrouter.ai%2Fsettings%2Fkeys)
 
-3) Run dev server
-```bash
-npm run dev
-# open http://localhost:3000
-```
+4. **Start the development server**
+   ```bash
+   npm run dev
+   ```
 
-## Environment Variables
+5. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000)
 
-- `OPENROUTER_API_KEY`: API key from https://openrouter.ai (required for OpenRouter models)
-- `GOOGLE_GENERATIVE_AI_API_KEY`: API key from Google AI Studio (required for Gemini models)
+## Color Scheme
 
-You can also provide an API key at runtime in the UI’s Settings panel.
+The application features a beautiful Indian-inspired color palette:
 
-## Project Structure
+- **Primary**: Saffron (#FF9933) - Represents courage and sacrifice
+- **Secondary**: Deep Blue - Represents wisdom and depth
+- **Background**: Dark blue-gray - Creates a professional, focused environment
+- **Accents**: Various shades of saffron and blue for visual hierarchy
 
-- `app/` – UI and API routes
-  - `api/openrouter/route.ts` – normalizes responses across OpenRouter models; strips reasoning, cleans up DeepSeek R1 to plain text
-  - `api/gemini/route.ts`, `api/gemini-pro/route.ts`
-- `components/` – UI components (chat box, model selector, etc.)
-- `lib/` – model catalog and client helpers
+## Technology Stack
 
-## Notes on DeepSeek R1
+- **Framework**: Next.js 15 with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS v4
+- **Animations**: Framer Motion
+- **Icons**: Lucide React
+- **State Management**: React hooks with localStorage
 
-Open-Fiesta post-processes DeepSeek R1 outputs to remove reasoning tags and convert Markdown to plain text for readability while preserving content.
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
 
-This project is licensed under the MIT License. See `LICENSE` for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Acknowledgements
+## Acknowledgments
 
-- Model access via OpenRouter and Google
+- Original project by [Niladri Hazra](https://github.com/NiladriHazra/Open-Fiesta)
+- Inspired by the rich cultural heritage of India
+- Built with modern web technologies for optimal performance and user experience
