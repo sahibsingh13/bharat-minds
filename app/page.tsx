@@ -61,6 +61,21 @@ export default function Home() {
     setActiveId(t.id);
   };
 
+  // Delete chat function
+  const deleteChat = (chatId: string) => {
+    setThreads(prev => prev.filter(t => t.id !== chatId));
+    if (activeId === chatId) {
+      const remainingThreads = threads.filter(t => t.id !== chatId);
+      if (remainingThreads.length > 0) {
+        setActiveId(remainingThreads[0].id);
+      } else {
+        const newChat: ChatThread = { id: crypto.randomUUID(), title: 'New Chat', messages: [], createdAt: Date.now() };
+        setThreads([newChat]);
+        setActiveId(newChat.id);
+      }
+    }
+  };
+
   const toggle = (id: string) => {
     setSelectedIds(prev => {
       if (prev.includes(id)) return prev.filter(x => x !== id);
@@ -150,7 +165,7 @@ export default function Home() {
             <button
               aria-label={sidebarOpen ? 'Collapse sidebar' : 'Expand sidebar'}
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="absolute -right-3 top-5 z-10 h-6 w-6 rounded-full bg-white/10 border border-white/15 flex items-center justify-center hover:bg-white/20"
+              className="absolute -right-3 top-5 z-10 h-6 w-6 rounded-full bg-white/10 border border-white/15 flex items-center justify-center hover:bg-white/20 cursor-pointer"
             >
               {sidebarOpen ? <ChevronLeft size={14} /> : <ChevronRight size={14} />}
             </button>
@@ -165,38 +180,53 @@ export default function Home() {
           {/* Sidebar content */}
           {sidebarOpen ? (
             <>
-              <button
-                onClick={() => {
-                  const t: ChatThread = { id: crypto.randomUUID(), title: 'New Chat', messages: [], createdAt: Date.now() };
-                  setThreads(prev => [t, ...prev]);
-                  setActiveId(t.id);
-                }}
-                className="mb-3 text-sm px-3 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white border border-blue-500/20 transition-colors"
-              >
+                              <button
+                  onClick={() => {
+                    const t: ChatThread = { id: crypto.randomUUID(), title: 'New Chat', messages: [], createdAt: Date.now() };
+                    setThreads(prev => [t, ...prev]);
+                    setActiveId(t.id);
+                  }}
+                  className="mb-3 text-sm px-3 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white border border-blue-500/20 transition-colors cursor-pointer"
+                >
                 + New Chat
               </button>
               <div className="text-xs uppercase tracking-wide opacity-60 mb-2">Chats</div>
               <div className="flex-1 overflow-y-auto space-y-1 pr-1">
                 {threads.length === 0 && <div className="text-xs opacity-60">No chats yet</div>}
-                {threads.map(t => (
-                  <button key={t.id} onClick={() => setActiveId(t.id)} className={`w-full text-left px-2 py-2 rounded-md text-sm border ${t.id === activeId ? 'bg-white/15 border-white/20' : 'bg-white/5 border-white/10 hover:bg-white/10'}`}>
-                    {t.title || 'Untitled'}
-                  </button>
-                ))}
+                                  {threads.map(t => (
+                    <div key={t.id} className="flex items-center gap-1 group">
+                      <button 
+                        onClick={() => setActiveId(t.id)} 
+                        className={`flex-1 text-left px-2 py-2 rounded-md text-sm border cursor-pointer ${t.id === activeId ? 'bg-white/15 border-white/20' : 'bg-white/5 border-white/10 hover:bg-white/10'}`}
+                      >
+                        {t.title || 'Untitled'}
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          deleteChat(t.id);
+                        }}
+                        className="opacity-0 group-hover:opacity-100 px-2 py-2 rounded-md text-xs text-red-400 hover:text-red-300 hover:bg-red-500/10 cursor-pointer transition-all"
+                        title="Delete chat"
+                      >
+                        ×
+                      </button>
+                    </div>
+                  ))}
               </div>
             </>
           ) : (
             <div className="flex-1 flex flex-col items-center pt-6">
               {/* New chat button */}
-              <button
-                title="New Chat"
-                onClick={() => {
-                  const t: ChatThread = { id: crypto.randomUUID(), title: 'New Chat', messages: [], createdAt: Date.now() };
-                  setThreads(prev => [t, ...prev]);
-                  setActiveId(t.id);
-                }}
-                className="h-8 w-8 rounded-full bg-blue-500 hover:bg-blue-600 flex items-center justify-center mb-4 mx-auto shrink-0 transition-colors"
-              >
+                              <button
+                  title="New Chat"
+                  onClick={() => {
+                    const t: ChatThread = { id: crypto.randomUUID(), title: 'New Chat', messages: [], createdAt: Date.now() };
+                    setThreads(prev => [t, ...prev]);
+                    setActiveId(t.id);
+                  }}
+                  className="h-8 w-8 rounded-full bg-blue-500 hover:bg-blue-600 flex items-center justify-center mb-4 mx-auto shrink-0 transition-colors cursor-pointer"
+                >
                 <Plus size={14} />
               </button>
 
@@ -206,13 +236,13 @@ export default function Home() {
                   const isActive = t.id === activeId;
                   const letter = (t.title || 'Untitled').trim()[0]?.toUpperCase() || 'N';
                   return (
-                    <button
-                      key={t.id}
-                      title={t.title || 'Untitled'}
-                      onClick={() => setActiveId(t.id)}
-                      className={`h-6 w-6 aspect-square rounded-full flex items-center justify-center transition-colors focus-visible:outline-none mx-auto shrink-0 
-                        ${isActive ? 'bg-white/20 ring-1 ring-white/30 ring-offset-1 ring-offset-black' : 'bg-white/5 hover:bg-white/10'}`}
-                    >
+                                          <button
+                        key={t.id}
+                        title={t.title || 'Untitled'}
+                        onClick={() => setActiveId(t.id)}
+                        className={`h-6 w-6 aspect-square rounded-full flex items-center justify-center transition-colors focus-visible:outline-none mx-auto shrink-0 cursor-pointer
+                          ${isActive ? 'bg-white/20 ring-1 ring-white/30 ring-offset-1 ring-offset-black' : 'bg-white/5 hover:bg-white/10'}`}
+                      >
                       <span className="text-[10px] font-semibold leading-none">
                         {letter}
                       </span>
@@ -228,7 +258,7 @@ export default function Home() {
           {showFirstVisitNote && (
             <div className="fixed inset-0 z-50 flex items-center justify-center">
               <div
-                className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+                className="absolute inset-0 bg-black/60 backdrop-blur-sm cursor-pointer"
                 onClick={() => setFirstNoteDismissed(true)}
               />
               <div className="relative mx-3 w-full max-w-md sm:max-w-lg rounded-2xl border border-white/10 bg-zinc-900/90 p-5 shadow-2xl">
@@ -245,13 +275,13 @@ export default function Home() {
                 <div className="flex flex-col sm:flex-row gap-2 justify-end mt-4">
                   <button
                     onClick={() => window.dispatchEvent(new Event('open-settings'))}
-                    className="text-sm px-3 py-2 rounded bg-blue-500 text-white border border-white/10 hover:bg-blue-600"
+                    className="text-sm px-3 py-2 rounded bg-blue-500 text-white border border-white/10 hover:bg-blue-600 cursor-pointer"
                   >
                     Get API key for free
                   </button>
                   <button
                     onClick={() => setFirstNoteDismissed(true)}
-                    className="text-sm px-3 py-2 rounded bg-white/10 border border-white/10 hover:bg-white/15"
+                    className="text-sm px-3 py-2 rounded bg-white/10 border border-white/10 hover:bg-white/15 cursor-pointer"
                   >
                     Dismiss
                   </button>
@@ -263,33 +293,49 @@ export default function Home() {
           {/* Mobile sidebar drawer */}
           {mobileSidebarOpen && (
             <div className="lg:hidden fixed inset-0 z-40">
-              <div className="absolute inset-0 bg-black/60" onClick={() => setMobileSidebarOpen(false)} />
+              <div className="absolute inset-0 bg-black/60 cursor-pointer" onClick={() => setMobileSidebarOpen(false)} />
               <div className="absolute left-0 top-0 h-full w-72 bg-black/90 border-r border-white/10 p-3">
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
                     <div className="w-2.5 h-2.5 rounded-full bg-blue-500" />
                     <h2 className="text-sm font-semibold">Bharat Minds</h2>
                   </div>
-                  <button onClick={() => setMobileSidebarOpen(false)} className="text-xs px-2 py-1 rounded bg-white/10">Close</button>
+                  <button onClick={() => setMobileSidebarOpen(false)} className="text-xs px-2 py-1 rounded bg-white/10 cursor-pointer">Close</button>
                 </div>
-                <button
-                  onClick={() => {
-                    const t: ChatThread = { id: crypto.randomUUID(), title: 'New Chat', messages: [], createdAt: Date.now() };
-                    setThreads(prev => [t, ...prev]);
-                    setActiveId(t.id);
-                    setMobileSidebarOpen(false);
-                  }}
-                  className="mb-3 text-sm px-3 py-2 w-full rounded-lg bg-blue-500 hover:bg-blue-600 text-white border border-blue-500/20 transition-colors"
-                >
+                                  <button
+                    onClick={() => {
+                      const t: ChatThread = { id: crypto.randomUUID(), title: 'New Chat', messages: [], createdAt: Date.now() };
+                      setThreads(prev => [t, ...prev]);
+                      setActiveId(t.id);
+                      setMobileSidebarOpen(false);
+                    }}
+                    className="mb-3 text-sm px-3 py-2 w-full rounded-lg bg-blue-500 hover:bg-blue-600 text-white border border-blue-500/20 transition-colors cursor-pointer"
+                  >
                   + New Chat
                 </button>
                 <div className="text-xs uppercase tracking-wide opacity-60 mb-2">Chats</div>
                 <div className="h-[70vh] overflow-y-auto space-y-1 pr-1">
                   {threads.length === 0 && <div className="text-xs opacity-60">No chats yet</div>}
                   {threads.map(t => (
-                    <button key={t.id} onClick={() => { setActiveId(t.id); setMobileSidebarOpen(false); }} className={`w-full text-left px-2 py-2 rounded-md text-sm border ${t.id === activeId ? 'bg-white/15 border-white/20' : 'bg-white/5 border-white/10 hover:bg-white/10'}`}>
-                      {t.title || 'Untitled'}
-                    </button>
+                    <div key={t.id} className="flex items-center gap-1 group">
+                      <button 
+                        onClick={() => { setActiveId(t.id); setMobileSidebarOpen(false); }} 
+                        className={`flex-1 text-left px-2 py-2 rounded-md text-sm border cursor-pointer ${t.id === activeId ? 'bg-white/15 border-white/20' : 'bg-white/5 border-white/10 hover:bg-white/10'}`}
+                      >
+                        {t.title || 'Untitled'}
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          deleteChat(t.id);
+                          setMobileSidebarOpen(false);
+                        }}
+                        className="opacity-0 group-hover:opacity-100 px-2 py-2 rounded-md text-xs text-red-400 hover:text-red-300 hover:bg-red-500/10 cursor-pointer transition-all"
+                        title="Delete chat"
+                      >
+                        ×
+                      </button>
+                    </div>
                   ))}
                 </div>
               </div>
@@ -302,7 +348,7 @@ export default function Home() {
               <div className="sticky top-0 z-20 bg-black/80 backdrop-blur-sm border-b border-white/10 px-4 py-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <button onClick={() => setMobileSidebarOpen(true)} className="lg:hidden text-xs px-3 py-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">Menu</button>
+                    <button onClick={() => setMobileSidebarOpen(true)} className="lg:hidden text-xs px-3 py-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors cursor-pointer">Menu</button>
                     <div className="flex items-center gap-2">
                       <Sparkles className="h-5 w-5 text-blue-500" />
                       <h1 className="text-xl font-bold text-white">Bharat Minds</h1>
@@ -311,7 +357,7 @@ export default function Home() {
                   <div className="flex items-center gap-2">
                     <button
                       onClick={handleRefresh}
-                      className="inline-flex items-center gap-2 text-xs px-3 py-2 rounded-lg bg-blue-500 text-white border border-blue-500/20 hover:bg-blue-600 transition-colors"
+                      className="inline-flex items-center gap-2 text-xs px-3 py-2 rounded-lg bg-blue-500 text-white border border-blue-500/20 hover:bg-blue-600 transition-colors cursor-pointer"
                       title="Start new chat"
                     >
                       <RefreshCw size={14} />
@@ -331,7 +377,7 @@ export default function Home() {
                 <button
                   key={m.id}
                   onClick={() => toggle(m.id)}
-                  className={`h-10 px-4 text-sm rounded-lg text-white border flex items-center gap-2 bg-white/5 hover:bg-white/10 transition-colors ${
+                  className={`h-10 px-4 text-sm rounded-lg text-white border flex items-center gap-2 bg-white/5 hover:bg-white/10 transition-colors cursor-pointer ${
                     m.good ? 'border-blue-400/50' : isFree ? 'border-green-400/50' : 'border-white/20 hover:border-white/30'
                   }`}
                   title="Click to toggle"
@@ -364,7 +410,7 @@ export default function Home() {
               <div className="ml-auto flex items-center gap-3">
                 <button
                   onClick={() => setModelsModalOpen(true)}
-                  className="text-sm px-4 py-2 rounded-lg border border-white/20 bg-white/5 hover:bg-white/10 hover:border-white/30 transition-colors"
+                  className="text-sm px-4 py-2 rounded-lg border border-white/20 bg-white/5 hover:bg-white/10 hover:border-white/30 transition-colors cursor-pointer"
                 >
                   Change Models
                 </button>
@@ -374,11 +420,11 @@ export default function Home() {
 
             {modelsModalOpen && (
               <div className="fixed inset-0 z-50 flex items-center justify-center">
-                <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={() => setModelsModalOpen(false)} />
+                <div className="absolute inset-0 bg-black/70 backdrop-blur-sm cursor-pointer" onClick={() => setModelsModalOpen(false)} />
                 <div className="relative w-full max-w-2xl mx-auto rounded-2xl border border-white/10 bg-zinc-900/90 p-5 shadow-2xl">
                   <div className="flex items-center justify-between mb-3">
                     <h3 className="text-base font-semibold tracking-wide">Select up to 5 models</h3>
-                    <button onClick={() => setModelsModalOpen(false)} className="text-xs px-2 py-1 rounded bg-white/10">Close</button>
+                    <button onClick={() => setModelsModalOpen(false)} className="text-xs px-2 py-1 rounded bg-white/10 cursor-pointer">Close</button>
                   </div>
                   <div className="text-xs text-zinc-300 mb-3">Selected: {selectedModels.length}/5</div>
                   <div className="space-y-3 max-h-[60vh] overflow-y-auto pr-1">
@@ -432,10 +478,10 @@ export default function Home() {
                                   onClick={() => !disabled && toggle(m.id)}
                                   className={`h-9 px-3 text-xs rounded-full border transition-colors flex items-center justify-between gap-3 min-w-[260px] ${
                                     selected
-                                      ? `${m.good ? 'border-amber-300/50' : free ? 'border-emerald-300/50' : 'border-white/20'} bg-white/10`
+                                      ? `${m.good ? 'border-amber-300/50' : free ? 'border-emerald-300/50' : 'border-white/20'} bg-white/10 cursor-pointer`
                                       : disabled
                                         ? 'bg-white/5 text-zinc-500 border-white/10 cursor-not-allowed opacity-60'
-                                        : `${m.good ? 'border-amber-300/30' : free ? 'border-emerald-300/30' : 'border-white/10'} bg-white/5 hover:bg-white/10`
+                                        : `${m.good ? 'border-amber-300/30' : free ? 'border-emerald-300/30' : 'border-white/10'} bg-white/5 hover:bg-white/10 cursor-pointer`
                                   }`}
                                   title={selected ? 'Click to unselect' : disabled ? 'Limit reached' : 'Click to select'}
                                 >
@@ -533,7 +579,7 @@ export default function Home() {
                             setCopiedAllIdx(i);
                             window.setTimeout(() => setCopiedAllIdx(null), 1200);
                           }}
-                          className={`text-[11px] px-2.5 py-1 rounded-md border shadow-sm transition-all ${
+                          className={`text-[11px] px-2.5 py-1 rounded-md border shadow-sm transition-all cursor-pointer ${
                             copiedAllIdx === i
                               ? 'bg-emerald-500/20 border-emerald-300/40 text-emerald-100 scale-[1.02]'
                               : 'bg-white/10 border-white/15 hover:bg-white/15'
@@ -567,7 +613,7 @@ export default function Home() {
                                       setCopiedKey(key);
                                       window.setTimeout(() => setCopiedKey(prev => (prev === key ? null : prev)), 1200);
                                     }}
-                                    className={`absolute top-2 right-2 z-10 text-[11px] px-2 py-1 rounded border whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all ${
+                                    className={`absolute top-2 right-2 z-10 text-[11px] px-2 py-1 rounded border whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all cursor-pointer ${
                                       copiedKey === `${i}:${m.id}`
                                         ? 'bg-emerald-500/20 border-emerald-300/40 text-emerald-100 scale-[1.02]'
                                         : 'bg-white/10 border-white/10 hover:bg-white/15'
@@ -598,7 +644,7 @@ export default function Home() {
                                         <div className="mt-2">
                                           <button
                                             onClick={() => window.dispatchEvent(new Event('open-settings'))}
-                                            className="text-xs px-2.5 py-1 rounded-md bg-blue-500 text-white border border-blue-500/20 hover:bg-blue-600 transition-colors"
+                                            className="text-xs px-2.5 py-1 rounded-md bg-blue-500 text-white border border-blue-500/20 hover:bg-blue-600 transition-colors cursor-pointer"
                                           >
                                             Add keys
                                           </button>
