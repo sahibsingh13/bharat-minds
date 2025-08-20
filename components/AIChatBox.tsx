@@ -56,8 +56,8 @@ function useAutoResizeTextarea({
   return { textareaRef, adjustHeight }
 }
 
-const MIN_HEIGHT = 48
-const MAX_HEIGHT = 164
+const MIN_HEIGHT = 40
+const MAX_HEIGHT = 120
 
 const AnimatedPlaceholder = ({ showSearch }: { showSearch: boolean }) => (
   <AnimatePresence mode="wait">
@@ -67,7 +67,7 @@ const AnimatedPlaceholder = ({ showSearch }: { showSearch: boolean }) => (
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -5 }}
       transition={{ duration: 0.1 }}
-      className="pointer-events-none w-[150px] text-sm absolute text-black/70 dark:text-white/70"
+      className="pointer-events-none w-[150px] text-xs mobile-text-xs absolute text-black/70 dark:text-white/70"
     >
       {showSearch ? "Search the web..." : "Ask Anything..."}
     </motion.p>
@@ -153,7 +153,7 @@ export function AiInput({ onSubmit, loading = false }: { onSubmit: (text: string
                     id="ai-input-04"
                     value={value}
                     placeholder=""
-                    className="w-full rounded-xl px-4 py-3 bg-transparent border-none text-white resize-none focus-visible:ring-0 leading-[1.2]"
+                    className="w-full rounded-xl px-3 py-2 bg-transparent border-none text-white resize-none focus-visible:ring-0 leading-[1.2] text-xs mobile-text-xs"
                     ref={textareaRef}
                     onKeyDown={(e) => {
                       if (e.key === "Enter" && !e.shiftKey) {
@@ -179,7 +179,7 @@ export function AiInput({ onSubmit, loading = false }: { onSubmit: (text: string
                   id="ai-input-04"
                   value={value}
                   placeholder=""
-                  className="w-full rounded-2xl rounded-b-none px-4 py-3 bg-black/5 dark:bg-white/5 border-none text-white resize-none focus-visible:ring-0 leading-[1.2]"
+                  className="w-full rounded-2xl rounded-b-none px-3 py-2 bg-black/5 dark:bg-white/5 border-none text-white resize-none focus-visible:ring-0 leading-[1.2] text-xs mobile-text-xs"
                   ref={textareaRef}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" && !e.shiftKey) {
@@ -201,8 +201,8 @@ export function AiInput({ onSubmit, loading = false }: { onSubmit: (text: string
             )}
           </div>
 
-          <div className="h-12 bg-black/5 dark:bg-white/5 rounded-b-xl">
-            <div className="absolute left-3 bottom-3 flex items-center gap-2">
+          <div className="h-10 bg-black/5 dark:bg-white/5 rounded-b-xl">
+            <div className="absolute left-2 bottom-2 flex items-center gap-1.5">
               <label
                 className={cn(
                   "cursor-pointer relative rounded-full p-2 bg-black/5 dark:bg-white/5",
@@ -272,7 +272,7 @@ export function AiInput({ onSubmit, loading = false }: { onSubmit: (text: string
                       }}
                       exit={{ width: 0, opacity: 0 }}
                       transition={{ duration: 0.2 }}
-                      className="text-sm overflow-hidden whitespace-nowrap text-blue-400 flex-shrink-0"
+                      className="text-xs mobile-text-xs overflow-hidden whitespace-nowrap text-blue-400 flex-shrink-0"
                     >
                       Search
                     </motion.span>
@@ -280,7 +280,7 @@ export function AiInput({ onSubmit, loading = false }: { onSubmit: (text: string
                 </AnimatePresence>
               </button>
             </div>
-            <div className="absolute right-3 bottom-3">
+            <div className="absolute right-2 bottom-2">
               <button
                 type="button"
                 onClick={handleSubmit}
