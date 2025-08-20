@@ -121,6 +121,35 @@
   }
 }
 
+/* Mobile-specific font sizes */
+@media (max-width: 768px) {
+  .text-xs {
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+  
+  .text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+  
+  /* Ensure proper text sizing on iPhone */
+  input, textarea, button {
+    font-size: 16px !important; /* Prevents zoom on iOS */
+  }
+  
+  /* Smaller text for mobile */
+  .mobile-text-xs {
+    font-size: 0.625rem;
+    line-height: 0.875rem;
+  }
+  
+  .mobile-text-sm {
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+}
+
 /* Themed scrollbars */
 * {
   scrollbar-width: thin;
