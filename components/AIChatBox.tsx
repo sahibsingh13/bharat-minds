@@ -56,8 +56,8 @@ function useAutoResizeTextarea({
   return { textareaRef, adjustHeight }
 }
 
-const MIN_HEIGHT = 48
-const MAX_HEIGHT = 164
+const MIN_HEIGHT = 40
+const MAX_HEIGHT = 120
 
 const AnimatedPlaceholder = ({ showSearch }: { showSearch: boolean }) => (
   <AnimatePresence mode="wait">
@@ -67,7 +67,7 @@ const AnimatedPlaceholder = ({ showSearch }: { showSearch: boolean }) => (
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -5 }}
       transition={{ duration: 0.1 }}
-      className="pointer-events-none w-[150px] text-sm absolute text-black/70 dark:text-white/70"
+      className="pointer-events-none w-[150px] text-xs absolute text-gray-500"
     >
       {showSearch ? "Search the web..." : "Ask Anything..."}
     </motion.p>
@@ -127,12 +127,12 @@ export function AiInput({ onSubmit, loading = false }: { onSubmit: (text: string
   }, [imagePreview])
   return (
     <div className="w-full py-4">
-      <div className="relative max-w-xl border rounded-[22px] border-black/5 p-1 w-full mx-auto">
-        <div className="relative rounded-2xl border border-black/5 bg-neutral-800/5 flex flex-col">
+      <div className="relative max-w-xl border rounded-[22px] border-gray-200 p-1 w-full mx-auto">
+        <div className="relative rounded-2xl border border-gray-200 bg-gray-50 flex flex-col">
           <div className="overflow-y-auto" style={{ maxHeight: `${MAX_HEIGHT}px` }}>
             {imagePreview ? (
               <div className="grid grid-cols-[96px_1fr] gap-3 p-3 pr-4">
-                <div className="relative h-[96px] w-[96px] rounded-xl overflow-hidden border border-white/10 shadow-sm">
+                <div className="relative h-[96px] w-[96px] rounded-xl overflow-hidden border border-gray-200 shadow-sm">
                   <Image
                     className="object-cover h-full w-full"
                     src={imagePreview}
@@ -148,12 +148,12 @@ export function AiInput({ onSubmit, loading = false }: { onSubmit: (text: string
                     <X className="w-3.5 h-3.5" />
                   </button>
                 </div>
-                <div className="relative rounded-xl bg-black/5 dark:bg-white/5 border border-white/10">
+                <div className="relative rounded-xl bg-gray-100 border border-gray-200">
                   <Textarea
                     id="ai-input-04"
                     value={value}
                     placeholder=""
-                    className="w-full rounded-xl px-4 py-3 bg-transparent border-none text-white resize-none focus-visible:ring-0 leading-[1.2]"
+                    className="w-full rounded-xl px-4 py-3 bg-transparent border-none text-gray-800 text-xs resize-none focus-visible:ring-0 leading-[1.2]"
                     ref={textareaRef}
                     onKeyDown={(e) => {
                       if (e.key === "Enter" && !e.shiftKey) {
@@ -179,7 +179,7 @@ export function AiInput({ onSubmit, loading = false }: { onSubmit: (text: string
                   id="ai-input-04"
                   value={value}
                   placeholder=""
-                  className="w-full rounded-2xl rounded-b-none px-4 py-3 bg-black/5 dark:bg-white/5 border-none text-white resize-none focus-visible:ring-0 leading-[1.2]"
+                  className="w-full rounded-2xl rounded-b-none px-4 py-3 bg-gray-100 border-none text-gray-800 text-xs resize-none focus-visible:ring-0 leading-[1.2]"
                   ref={textareaRef}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" && !e.shiftKey) {
@@ -201,14 +201,14 @@ export function AiInput({ onSubmit, loading = false }: { onSubmit: (text: string
             )}
           </div>
 
-          <div className="h-12 bg-black/5 dark:bg-white/5 rounded-b-xl">
-            <div className="absolute left-3 bottom-3 flex items-center gap-2">
+          <div className="h-10 bg-gray-100 rounded-b-xl">
+            <div className="absolute left-3 bottom-2 flex items-center gap-2">
               <label
                 className={cn(
-                  "cursor-pointer relative rounded-full p-2 bg-black/5 dark:bg-white/5",
+                  "cursor-pointer relative rounded-full p-2 bg-gray-200",
                   imagePreview
                     ? "bg-blue-500/15 border border-blue-500 text-blue-400"
-                    : "text-white/60 hover:text-white"
+                    : "text-gray-600 hover:text-gray-800"
                 )}
               >
                 <input
@@ -218,7 +218,7 @@ export function AiInput({ onSubmit, loading = false }: { onSubmit: (text: string
                   className="hidden"
                 />
                 <Paperclip
-                  className={cn("w-4 h-4 transition-colors", imagePreview ? "text-blue-400" : "text-white/60 hover:text-white")}
+                  className={cn("w-3 h-3 transition-colors", imagePreview ? "text-blue-400" : "text-gray-600 hover:text-gray-800")}
                 />
               </label>
               <button
@@ -227,13 +227,13 @@ export function AiInput({ onSubmit, loading = false }: { onSubmit: (text: string
                   setShowSearch(!showSearch)
                 }}
                 className={cn(
-                  "rounded-full transition-all flex items-center gap-2 px-1.5 py-1 border h-8",
+                  "rounded-full transition-all flex items-center gap-2 px-1.5 py-1 border h-6",
                   showSearch
                     ? "bg-blue-500/15 border-blue-400 text-blue-400"
-                    : "bg-black/5 dark:bg-white/5 border-transparent text-white/60 hover:text-white"
+                    : "bg-gray-200 border-transparent text-gray-600 hover:text-gray-800"
                 )}
               >
-                <div className="w-4 h-4 flex items-center justify-center flex-shrink-0">
+                <div className="w-3 h-3 flex items-center justify-center flex-shrink-0">
                   <motion.div
                     animate={{
                       rotate: showSearch ? 180 : 0,
@@ -256,7 +256,7 @@ export function AiInput({ onSubmit, loading = false }: { onSubmit: (text: string
                   >
                     <Globe
                       className={cn(
-                        "w-4 h-4",
+                        "w-3 h-3",
                         showSearch ? "text-blue-400" : "text-inherit"
                       )}
                     />
@@ -272,7 +272,7 @@ export function AiInput({ onSubmit, loading = false }: { onSubmit: (text: string
                       }}
                       exit={{ width: 0, opacity: 0 }}
                       transition={{ duration: 0.2 }}
-                      className="text-sm overflow-hidden whitespace-nowrap text-blue-400 flex-shrink-0"
+                      className="text-xs overflow-hidden whitespace-nowrap text-blue-400 flex-shrink-0"
                     >
                       Search
                     </motion.span>
@@ -280,7 +280,7 @@ export function AiInput({ onSubmit, loading = false }: { onSubmit: (text: string
                 </AnimatePresence>
               </button>
             </div>
-            <div className="absolute right-3 bottom-3">
+            <div className="absolute right-3 bottom-2">
               <button
                 type="button"
                 onClick={handleSubmit}
@@ -290,15 +290,15 @@ export function AiInput({ onSubmit, loading = false }: { onSubmit: (text: string
                     ? "bg-blue-500/20 text-blue-400 cursor-not-allowed"
                   : value
                     ? "bg-blue-500/15 text-blue-400"
-                    : "bg-black/5 dark:bg-white/5 text-white/80 hover:text-white"
+                    : "bg-gray-200 text-gray-600 hover:text-gray-800"
                 )}
                 disabled={loading}
                 aria-busy={loading}
               >
                 {loading ? (
-                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <Loader2 className="w-3 h-3 animate-spin" />
                 ) : (
-                  <Send className="w-4 h-4" />
+                  <Send className="w-3 h-3" />
                 )}
               </button>
             </div>
