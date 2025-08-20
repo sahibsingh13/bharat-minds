@@ -123,10 +123,10 @@ export default function HomeChat() {
       {/* Left sidebar: chats */}
       <aside className="hidden md:flex w-64 shrink-0 flex-col border-r border-white/10 bg-white/5">
         <div className="p-3 border-b border-white/10 flex items-center justify-between">
-          <Logo size={18} />
+          <Logo size={16} />
           <button
             onClick={() => setRightOpen(true)}
-            className="relative h-8 w-8 rounded-full border border-blue-400/30 overflow-hidden cursor-pointer"
+            className="relative h-7 w-7 rounded-full border border-blue-400/30 overflow-hidden cursor-pointer"
             title="Open settings"
           >
             <span className="absolute inset-0 animate-pulse bg-blue-500/20" />
@@ -140,17 +140,17 @@ export default function HomeChat() {
               <div key={t.id} className={`group flex items-center gap-1 rounded-md ${isActive ? 'bg-white/10' : 'bg-transparent hover:bg-white/5'}`}>
                 <button
                   onClick={() => setActiveId(t.id)}
-                  className={`flex-1 text-left px-2 py-2 text-sm rounded-md cursor-pointer ${isActive ? 'text-white' : 'text-zinc-200'}`}
+                  className={`flex-1 text-left px-2 py-1.5 text-xs rounded-md cursor-pointer ${isActive ? 'text-white' : 'text-zinc-200'}`}
                   title={t.title || 'Untitled'}
                 >
                   {t.title || 'Untitled'}
                 </button>
                 <button
                   onClick={(e) => { e.stopPropagation(); setThreads(prev => prev.filter(x => x.id !== t.id)); if (activeId === t.id) setActiveId(null); }}
-                  className="opacity-0 group-hover:opacity-100 p-2 text-red-400 hover:text-red-300 cursor-pointer"
+                  className="opacity-0 group-hover:opacity-100 p-1.5 text-red-400 hover:text-red-300 cursor-pointer"
                   title="Delete chat"
                 >
-                  <Trash2 size={14} />
+                  <Trash2 size={12} />
                 </button>
               </div>
             );
@@ -168,53 +168,53 @@ export default function HomeChat() {
               
             </div>
             <div className="flex items-center gap-3">
-              <button onClick={() => setRightOpen(v => !v)} className="h-8 w-8 rounded-full border border-white/15 bg-white/5 hover:bg-white/10 cursor-pointer inline-flex items-center justify-center" title="Settings">
-                <Cog size={14} />
+              <button onClick={() => setRightOpen(v => !v)} className="h-7 w-7 rounded-full border border-white/15 bg-white/5 hover:bg-white/10 cursor-pointer inline-flex items-center justify-center" title="Settings">
+                <Cog size={12} />
               </button>
             </div>
           </div>
         </div>
 
         {/* Message list */}
-        <div className="flex-1 overflow-y-auto px-4 py-4" id="messages-container">
+        <div className="flex-1 overflow-y-auto px-3 py-3" id="messages-container">
           {turns.length === 0 && selectedModels.length === 0 && (
             <div className="max-w-2xl mx-auto text-center text-zinc-400 mt-10">
-              <div className="mx-auto w-20 h-20 rounded-full bg-blue-500/20 border border-blue-400/30 overflow-hidden">
+              <div className="mx-auto w-16 h-16 rounded-full bg-blue-500/20 border border-blue-400/30 overflow-hidden">
                 <div className="w-full h-full animate-[pulse_2s_ease-in-out_infinite]" />
               </div>
-              <div className="mt-3">Start a conversation from the settings panel and compare answers.</div>
+              <div className="mt-3 text-xs">Start a conversation from the settings panel and compare answers.</div>
             </div>
           )}
           {turns.length === 0 && selectedModels.length > 0 && (
             <div className="max-w-2xl mx-auto text-center text-zinc-400 mt-10">
-              <div className="mx-auto w-20 h-20 rounded-full bg-blue-500/20 border border-blue-400/30 overflow-hidden">
+              <div className="mx-auto w-16 h-16 rounded-full bg-blue-500/20 border border-blue-400/30 overflow-hidden">
                 <div className="w-full h-full animate-[pulse_2s_ease-in-out_infinite]" />
               </div>
-              <div className="mt-3">Models selected. Ask your first question to get started.</div>
+              <div className="mt-3 text-xs">Models selected. Ask your first question to get started.</div>
             </div>
           )}
-          <div className="max-w-3xl mx-auto space-y-6">
-            {turns.map((row, idx) => (
-              <div key={idx} className="space-y-3">
-                <div className="rounded-lg bg-white/5 border border-white/10 p-4">
-                  <div className="text-sm text-zinc-300"><span className="opacity-60">You:</span> {row.user.content}</div>
+                      <div className="max-w-3xl mx-auto space-y-4">
+              {turns.map((row, idx) => (
+                <div key={idx} className="space-y-2">
+                <div className="rounded-lg bg-white/5 border border-white/10 p-3">
+                  <div className="text-xs text-zinc-300"><span className="opacity-60">You:</span> {row.user.content}</div>
                 </div>
                 {/* Answers inline tabs when 2+ models selected */}
                 {row.answers.length === 0 ? (
-                  <div className="rounded-lg border border-white/10 p-4 text-sm">
+                  <div className="rounded-lg border border-white/10 p-3 text-sm">
                     <div className="flex items-center gap-2">
-                      <span className="relative inline-flex h-3 w-3">
+                      <span className="relative inline-flex h-2.5 w-2.5">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
-                        <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-500" />
+                        <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-blue-500" />
                       </span>
-                      <span className="text-zinc-300">Waiting for responses…</span>
+                      <span className="text-xs text-zinc-300">Waiting for responses…</span>
                     </div>
                   </div>
                 ) : selectedModels.length > 1 ? (
                   <div>
                     <div className="flex gap-2 mb-2">
                       {selectedModels.map((m, i) => (
-                        <a key={m.id} href={`#turn-${idx}-${m.id}`} className="text-[11px] px-2 py-1 rounded bg-white/10 border border-white/15 hover:bg-white/15">
+                        <a key={m.id} href={`#turn-${idx}-${m.id}`} className="text-[10px] px-1.5 py-0.5 rounded bg-white/10 border border-white/15 hover:bg-white/15">
                           {m.label}
                         </a>
                       ))}
@@ -223,11 +223,11 @@ export default function HomeChat() {
                       {selectedModels.map((m) => {
                         const ans = row.answers.find(a => a.modelId === m.id);
                         return (
-                          <div id={`turn-${idx}-${m.id}`} key={m.id} className="rounded-lg p-4 ring-1 bg-white/5 ring-white/10">
+                          <div id={`turn-${idx}-${m.id}`} key={m.id} className="rounded-lg p-3 ring-1 bg-white/5 ring-white/10">
                             <div className="mb-2 text-xs inline-flex items-center gap-2">
-                              <span className="px-2 py-0.5 rounded-full border border-white/20 text-zinc-200">{m.label}</span>
+                              <span className="px-1.5 py-0.5 rounded-full border border-white/20 text-zinc-200 text-[10px]">{m.label}</span>
                             </div>
-                            <div className="prose prose-invert max-w-none text-sm">
+                            <div className="prose prose-invert max-w-none text-xs">
                               <MarkdownLite text={ans?.content || '…'} />
                             </div>
                           </div>
@@ -240,12 +240,12 @@ export default function HomeChat() {
                     const m = MODEL_CATALOG.find(x => x.id === ans.modelId);
                     const isLoading = ans.content.toLowerCase().includes("error:") === false && loadingIds.includes(ans.modelId || "");
                     return (
-                      <div key={`${idx}-${ans.modelId}-${ans.ts}`} className={`rounded-lg p-4 ring-1 ${m?.good ? 'bg-amber-400/10 ring-amber-300/30' : 'bg-white/5 ring-white/10'}`}>
+                      <div key={`${idx}-${ans.modelId}-${ans.ts}`} className={`rounded-lg p-3 ring-1 ${m?.good ? 'bg-amber-400/10 ring-amber-300/30' : 'bg-white/5 ring-white/10'}`}>
                         <div className="mb-2 text-xs inline-flex items-center gap-2">
-                          <span className={`px-2 py-0.5 rounded-full border ${m?.good ? 'border-amber-300/40 text-amber-200' : 'border-white/20 text-zinc-200'}`}>{m?.label || ans.modelId}</span>
-                          {isLoading && <span className="text-blue-400">Thinking…</span>}
+                          <span className={`px-1.5 py-0.5 rounded-full border text-[10px] ${m?.good ? 'border-amber-300/40 text-amber-200' : 'border-white/20 text-zinc-200'}`}>{m?.label || ans.modelId}</span>
+                          {isLoading && <span className="text-blue-400 text-[10px]">Thinking…</span>}
                         </div>
-                        <div className="prose prose-invert max-w-none text-sm">
+                        <div className="prose prose-invert max-w-none text-xs">
                           <MarkdownLite text={ans.content} />
                         </div>
                       </div>
@@ -259,7 +259,7 @@ export default function HomeChat() {
         </div>
 
         {/* Input */}
-        <div className="sticky bottom-0 bg-black/80 backdrop-blur border-t border-white/10 p-3">
+        <div className="sticky bottom-0 bg-black/80 backdrop-blur border-t border-white/10 p-2">
           <div className="max-w-3xl mx-auto">
             <AiInput onSubmit={(t, img) => send(t, img)} loading={anyLoading} />
           </div>

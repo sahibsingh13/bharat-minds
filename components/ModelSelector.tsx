@@ -27,7 +27,7 @@ export default function ModelSelector({
             key={m.id}
             onClick={() => onToggle(m.id)}
             disabled={!selected && disabled}
-                            className={`px-3 py-1.5 rounded-lg border text-sm tracking-tight ${selected ? 'bg-blue-500 border-blue-500/50 text-white' : 'bg-white/10 border-white/20 text-white'} ${disabled ? 'opacity-40 cursor-not-allowed' : 'hover:bg-white/20'}`}
+                            className={`px-2 py-1 rounded-lg border text-xs tracking-tight ${selected ? 'bg-blue-500 border-blue-500/50 text-white' : 'bg-gray-100 border-gray-200 text-gray-700'} ${disabled ? 'opacity-40 cursor-not-allowed' : 'hover:bg-gray-200'}`}
             title={disabled ? `Max ${max} models at once` : ''}
           >
             {selected ? '✓ ' : ''}{m.label}
